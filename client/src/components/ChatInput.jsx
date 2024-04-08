@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './ChatInput.css';
 
 const ChatInput = ({ onSendMessage }) => {
  const [message, setMessage] = useState('');
@@ -12,20 +11,22 @@ const ChatInput = ({ onSendMessage }) => {
     e.preventDefault();
     if (message.trim()) {
       onSendMessage(message);
-      setMessage(''); // Clear the input field after sending
+      setMessage('');
     }
  };
 
  return (
-    <form onSubmit={handleSubmit} className="chat-input">
+    <form onSubmit={handleSubmit} className="flex items-center p-4">
       <input
         type="text"
         value={message}
         onChange={handleChange}
         placeholder="Type your message here..."
-        className="chat-input-field text-black"
+        className="flex-grow px-4 py-2 text-black rounded-full bg-white border border-gray-300 focus:outline-none focus:border-blue-500"
       />
-      <button type="submit" className="chat-input-button">Send</button>
+      <button type="submit" className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
+        Send
+      </button>
     </form>
  );
 };
