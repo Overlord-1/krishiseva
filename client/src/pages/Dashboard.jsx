@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "../Dashboard.css";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
@@ -13,10 +13,13 @@ const Dashboard = () => {
 
   const socket = useMemo(() => io("http://localhost:4000"), []);
 
-  socket.on("connection", () => {
-    console.log("Connected to server");
-  });
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+  }, [socket]);
 
+  // socket.emit("message", {text:"putTextHere", Img:"putImgHere", email:"formLocal"})
   return (
     <>
       <Header />

@@ -16,6 +16,7 @@ app.use(express.json());
 
 // Routes
 const login = require("./routes/login");
+const e = require("express");
 app.use("/api", login);
 
 // Create HTTP server
@@ -36,7 +37,9 @@ io.on("connection", (socket) => {
   console.log("User connected, ID:", socket.id);
 
   socket.broadcast.emit("welcome", `${socket.id} joined the server`);
-
+  socket.on("what", (e) => {
+    console.log(e);
+  });
   socket.on("message", ({ message, room }) => {
     console.log("socket.on message->", message, "room->", room);
     io.to(room).emit("recieve-message", message); // Send the message to all clients in the room
