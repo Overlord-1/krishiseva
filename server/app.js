@@ -28,21 +28,23 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true,
   },
-  // path: "/socket.io", // Specify a custom path for Socket.io requests
+  path: "/socket.io", // Specify a custom path for Socket.io requests
 });
 
 // Socket.io event handlers
 io.on("connection", (socket) => {
   console.log("User connected, ID:", socket.id);
-  socket.on("mes", (e) => {
-    console.log(e);
-  });
 
   socket.broadcast.emit("welcome", `${socket.id} joined the server`);
 
   socket.on("message", ({ message, room }) => {
     console.log("socket.on message->", message, "room->", room);
     io.to(room).emit("recieve-message", message); // Send the message to all clients in the room
+  });
+
+  socket.on("join-room", (room) => {
+    console.log(`User ${socket.id} joined room ${room}`);
+    socket.join(room); // Join the room specified in the payload
   });
 
   socket.on("disconnect", () => {
