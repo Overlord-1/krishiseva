@@ -2,12 +2,42 @@ require("dotenv").config();
 const connectDB = require("./db/connect");
 const express = require("express");
 const cors = require("cors");
+const app = express();
+// app.use(cors());
 const { Server } = require("socket.io");
 const { createServer } = require("http");
 const url = process.env.MONG_URI;
 
-const app = express();
-app.use(cors());
+const server = createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+  path: "/socket.io", // Specify a custom path for Socket.io requests
+});
+
+io.on("connection", (socket) => {
+  console.log("User connected, ID:", socket.id);
+
+  socket.broadcast.emit("welcome", `${socket.id} joined the server`);
+
+  socket.on("message", ({ message, room }) => {
+    console.log("socket.on message->", message, "room->", room);
+    io.to(room).emit("recieve-message", message); // Send the message to all clients in the room
+  });
+
+  socket.on("join-room", (room) => {
+    console.log(`User ${socket.id} joined room ${room}`);
+    socket.join(room); // Join the room specified in the payload
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected", socket.id);
+  });
+});
 
 const login = require("./routes/login");
 const port = 4000;
@@ -25,7 +55,7 @@ const start = async () => {
     console.log(err);
   }
 };
-//hello
+
 start();
 
 /* const connectDB = require("./db/connect");
