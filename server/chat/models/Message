@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const MessageSchema = new mongoose.Schema({
+  text: String,
+  Img: String,
   email: String,
-  content: String,
-  image: String,
   time: String,
 });
 const Message = mongoose.model("Message", MessageSchema);

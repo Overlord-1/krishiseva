@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 const { createServer } = require("http");
-
+const { createMessage, getMessages } = require("./controllers/chat");
 const chat = function (app) {
   const server = createServer(app);
 
@@ -19,16 +19,24 @@ const chat = function (app) {
     console.log("User connected, ID:", socket.id);
 
     socket.broadcast.emit("welcome", `${socket.id} joined the server`);
+    /*    const allMessages = getMessages();
+    allMessages.then((messages) => {
+      messages.forEach((message) => {
+        socket.emit("recvMessage", {
+          text: message.text,
+          Img: message.Img,
+          email: message.email,
+        });
+      });
+    }); */
     socket.on("message", ({ text, Img, email }) => {
       console.log(text, Img, email);
-      socket.broadcast.emit(
-        "recvMessage",
-        {
-          text:text,
-          Img:Img,
-          email:email
-        }
-      );
+      createMessage({ text, Img, email, time: null });
+      socket.broadcast.emit("recvMessage", {
+        text: text,
+        Img: Img,
+        email: email,
+      });
     });
   });
 
