@@ -25,6 +25,7 @@ const start = async () => {
     console.log(err);
   }
 };
+//hello
 start();
 
 /* const connectDB = require("./db/connect");
