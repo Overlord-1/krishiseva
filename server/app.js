@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const { Server } = require("socket.io");
 const { createServer } = require("http");
+const chat = require("./chat/chat.js");
 
 const url = process.env.MONG_URI;
 const port = 4000;
@@ -20,42 +21,8 @@ const e = require("express");
 app.use("/api", login);
 
 // Create HTTP server
-const server = createServer(app);
+const server = chat(app);
 
-// Initialize Socket.io with custom path
-const io = new Server(server, {
-  cors: {
-    origin: "*", // Update this to match your frontend URL
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-  path: "/socket.io", // Specify a custom path for Socket.io requests
-});
-
-// Socket.io event handlers
-io.on("connection", (socket) => {
-  console.log("User connected, ID:", socket.id);
-
-  socket.broadcast.emit("welcome", `${socket.id} joined the server`);
-  socket.on("what", (e) => {
-    console.log(e);
-  });
-  socket.on("message", ({ message, room }) => {
-    console.log("socket.on message->", message, "room->", room);
-    io.to(room).emit("recieve-message", message); // Send the message to all clients in the room
-  });
-
-  socket.on("join-room", (room) => {
-    console.log(`User ${socket.id} joined room ${room}`);
-    socket.join(room); // Join the room specified in the payload
-  });
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected", socket.id);
-  });
-});
-
-// Start the server
 const start = async () => {
   try {
     await connectDB(url);
