@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import down from "../assets/down.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Splash from "../components/Splash";
 
 // const handleLogin = async (e) => {
 //     e.preventDefault();
@@ -22,6 +23,10 @@ import axios from "axios";
 const Login = () => {
   const [registerError, setRegisterError] = useState(false);
   const [message, setMessage] = useState("");
+  const [showSplash, setShowSplash] = useState(false);
+  const loginButtonRef = useRef(null);
+  const [splashStartPosition, setSplashStartPosition] = useState({ top: 0, left: 0, width: 0, height: 0 });
+
 
   const [formData, setFormData] = useState({
     email: "",
@@ -39,7 +44,25 @@ const Login = () => {
       const response = await axios.get(
         `http://localhost:4000/api/${formData.email}/${formData.password}`
       );
-      console.log(response.data); // You can handle the response as needed
+      console.log(response.data.user.name); // You can handle the response as needed
+      console.log(response.data.user.email);
+      const email = response.data.user.email;
+      const name = response.data.user.name;
+      localStorage.setItem("email", email);
+      localStorage.setItem("name", name);
+      const buttonRect = loginButtonRef.current.getBoundingClientRect();
+      const startPosition = {
+        top: buttonRect.top,
+        left: buttonRect.left,
+        width: buttonRect.width,
+        height: buttonRect.height,
+      };
+      setShowSplash(true);
+      setSplashStartPosition(startPosition);
+
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 1000);
     } catch (error) {
       console.error("Error registering user:", error);
       setRegisterError(true);
@@ -79,6 +102,7 @@ const Login = () => {
           <button
             type="submit"
             className="bg-green-400 w-[150px] p-5 rounded-xl"
+            ref={loginButtonRef}
           >
             Login
           </button>
@@ -93,6 +117,12 @@ const Login = () => {
 
       <img src={down} alt="" className="w-full md:hidden" />
       {/* This is chahts idea */}
+      {showSplash && (
+        <Splash
+          onComplete={() => setShowSplash(false)}
+          startPosition={splashStartPosition}
+        />
+      )}
     </div>
   );
 };

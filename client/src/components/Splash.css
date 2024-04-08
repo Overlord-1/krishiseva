@@ -1,0 +1,21 @@
+.splash-screen {
+   position: fixed;
+   background-color: black;
+   z-index: 9999;
+   animation: expandAndFadeOut 1s forwards;
+   border-radius: 99999px;
+  }
+  
+  @keyframes expandAndFadeOut {
+    0% {
+      opacity: 1;
+   }
+    100% {
+      top: -100%;
+      left: -100%;
+      width: 400%;
+      height: 400%;
+      opacity: 1;
+   }
+  }
+  
