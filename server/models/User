@@ -7,15 +7,3 @@ const UserSchema = new mongoose.Schema({
 }); //schema for collection
 module.exports = mongoose.model("User", UserSchema); //model is the wrapper for schema
 //mongoose model provides an interface with the mongo db, to perform CRUD
-
-/* 
-  name: {
-    type: String,
-    required: [true, "must provide name"], //validator to make sure name is not empty
-    trim: true,
-    maxlength: [20, "cannot be more than 20"],
-  },
-  completed: {
-    type: Boolean,
-    default: false,
-  }, */
