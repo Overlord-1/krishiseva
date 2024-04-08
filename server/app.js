@@ -25,7 +25,7 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*", // Update this to match your frontend URL
-    methods: ["GET", "POSsT"],
+    methods: ["GET", "POST"],
     credentials: true,
   },
   // path: "/socket.io", // Specify a custom path for Socket.io requests
