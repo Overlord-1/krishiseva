@@ -5,7 +5,13 @@ import Navbar from "../components/Navbar";
 import io from "socket.io-client";
 
 const Dashboard = () => {
-  const socket = io("http://localhost:3000");
+  // const socket = io("http://localhost:3000");
+  // socket.on("connection", () => {
+  //   console.log("Connected to server");
+  // });
+
+  const socket = useMemo(() => io("http://localhost:3000"), []);
+
   socket.on("connection", () => {
     console.log("Connected to server");
   });
