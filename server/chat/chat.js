@@ -23,7 +23,11 @@ const chat = function (app) {
       console.log(text, Img, email);
       socket.broadcast.emit(
         "recvMessage",
-        `text-> ${text},  Img->${Img} email->${email}`
+        {
+          text:text,
+          Img:Img,
+          email:email
+        }
       );
     });
   });
