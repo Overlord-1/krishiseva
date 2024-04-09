@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import ChatInput from "./ChatInput";
 import ChatComp from "./ChatComp";
+import axios from "axios";
 
 const Chat = ({messageSent,socket}) => {
   const [messages, setMessages] = useState([]);
+  //this loads all the messsages from the db
+  useEffect(() => {
+    axios.get("http://localhost:4000/api/messages").then((response) => {
+      console.log(response.data[0].text);
+      response.data.map((parameter)=>{
+        setMessages(prevMessages=>[...prevMessages,{text:parameter.text,sender:parameter.email}])
+      })
+    });    
+  }, []);
 
   const handleSendMessage = (message) => {
     console.log('Message sent:', message);
     setMessages(prevMessages => [...prevMessages, {
       text: message,
-      sender: "me",
+      sender: localStorage.getItem("email"),
     }]);
     messageSent(message);
   };

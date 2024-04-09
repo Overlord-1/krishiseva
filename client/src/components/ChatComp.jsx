@@ -7,12 +7,12 @@ const ChatComp = ({ messages }) => {
         <div
           key={index}
           className={`mb-4 w-full flex ${
-            message.sender === "me" ? "flex-row justify-end" : "flex-row-reverse justify-end"
+            message.sender === localStorage.getItem('email') ? "flex-row justify-end" : "flex-row-reverse justify-end"
           }`}
         >
           <div
             className={`rounded-2xl font-bold p-3 ${
-              message.sender === "me"
+              message.sender === localStorage.getItem('email')
                 ? "bg-[#fcdc5c] text-black"
                 : "bg-[#6d9895] text-black"
             }`}
@@ -20,10 +20,10 @@ const ChatComp = ({ messages }) => {
             <p>{message.text}</p>
           </div>
           <div
-            className={`${message.sender==="me"?"bg-[#6d9895]":"bg-[#fcdc5c]"}  w-10 h-10 rounded-[50%] text-black p-3 flex justify-center font-bold uppercase`}
+            className={`${message.sender===localStorage.getItem('email')?"bg-[#6d9895]":"bg-[#fcdc5c]"}  w-10 h-10 rounded-[50%] text-black p-3 flex justify-center font-bold uppercase`}
           >
             {
-              message.sender === "me"
+              message.sender === localStorage.getItem('email')
                 ? localStorage.getItem("name")[0]
                 : message.sender[0]
             }
