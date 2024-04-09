@@ -29,13 +29,14 @@ const chat = function (app) {
         });
       });
     }); */
-    socket.on("message", ({ text, Img, email }) => {
+    socket.on("message", ({ text, Img, email,time }) => {
       console.log(text, Img, email);
-      createMessage({ text, Img, email, time: null });
+      createMessage({ text, Img, email, time });
       socket.broadcast.emit("recvMessage", {
         text: text,
         Img: Img,
         email: email,
+        time: time,
       });
     });
   });

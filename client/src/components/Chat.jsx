@@ -3,14 +3,13 @@ import ChatInput from "./ChatInput";
 import ChatComp from "./ChatComp";
 import axios from "axios";
 
-const Chat = ({messageSent,socket}) => {
+const Chat = ({messageSent,socket,time}) => {
   const [messages, setMessages] = useState([]);
   //this loads all the messsages from the db
   useEffect(() => {
     axios.get("http://localhost:4000/api/messages").then((response) => {
-      console.log(response.data[0].text);
       response.data.map((parameter)=>{
-        setMessages(prevMessages=>[...prevMessages,{text:parameter.text,sender:parameter.email}])
+        setMessages(prevMessages=>[...prevMessages,{text:parameter.text,sender:parameter.email,time:parameter.time}])
       })
     });    
   }, []);
@@ -21,6 +20,7 @@ const Chat = ({messageSent,socket}) => {
     setMessages(prevMessages => [...prevMessages, {
       text: message,
       sender: localStorage.getItem("email"),
+      time: time,
     }]);
     messageSent(message);
   };
@@ -33,6 +33,7 @@ const Chat = ({messageSent,socket}) => {
       setMessages(prevMessages => [...prevMessages, {
         text: data.text,
         sender: data.email,
+        time: data.time,
       }]);
     };
 

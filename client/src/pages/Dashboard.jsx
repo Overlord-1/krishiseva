@@ -8,10 +8,12 @@ import chat from "../assets/chat.svg";
 import cropcycle from "../assets/cropcycle.svg";
 import leafrecog from "../assets/leafrecog.svg";
 import Chat from "../components/Chat";
+import {format} from "date-fns";
 
 const Dashboard = () => {
 
   const socket = useMemo(() => io("http://localhost:4000"), []);
+  const time = format(new Date(), "hh:mm aaa");
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -20,12 +22,12 @@ const Dashboard = () => {
   }, [socket]);
 
   const handleMessageSent = (message) => {
-    const jsonMsg = { text: message, Img: null, email: localStorage.getItem("email") }
+    const jsonMsg = { text: message, Img: null, email: localStorage.getItem("email"), time: time}
     console.log(jsonMsg);
     socket.emit("message",jsonMsg);
   }
 
-  const [pageState, setPageState] = useState(0);
+  const [pageState, setPageState] = useState(2);
   const handleFooterClick = (e) => {
     console.log(e.target.alt);
     if (e.target.alt === "cropcycle") {
@@ -56,7 +58,7 @@ const Dashboard = () => {
             <h1>Leaf Recognition</h1>
           </div>
         ) : (
-          <Chat messageSent={handleMessageSent} socket={socket} />
+          <Chat messageSent={handleMessageSent} socket={socket} time={time} />
         )
       }
       <div className="footer w-full bg-[#1e1f26] text-white flex px-5 justify-between fixed bottom-0  z-20 rounded-t-2xl">

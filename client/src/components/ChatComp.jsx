@@ -2,7 +2,7 @@ import React from "react";
 
 const ChatComp = ({ messages }) => {
   return (
-    <div className="chat-messages p-4 overflow-y-auto h-full max-h-[660px] mb-[1000px] ">
+    <div className="chat-messages p-4 overflow-y-auto h-full max-h-[750px] max-w-screen-sm ">
       {messages.map((message, index) => (
         <div
           key={index}
@@ -18,6 +18,7 @@ const ChatComp = ({ messages }) => {
             }`}
           >
             <p>{message.text}</p>
+            <p className="text-xs text-slate-800">{message.time}</p>
           </div>
           <div
             className={`${message.sender===localStorage.getItem('email')?"bg-[#6d9895]":"bg-[#fcdc5c]"}  w-10 h-10 rounded-[50%] text-black p-3 flex justify-center font-bold uppercase`}
