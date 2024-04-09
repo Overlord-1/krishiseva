@@ -19,7 +19,7 @@ const chat = function (app) {
     console.log("User connected, ID:", socket.id);
 
     socket.broadcast.emit("welcome", `${socket.id} joined the server`);
-    const allMessages = getMessages();
+    /*     const allMessages = getMessages();
     allMessages.then((messages) => {
       messages.forEach((message) => {
         socket.emit("recvMessage", {
@@ -28,7 +28,7 @@ const chat = function (app) {
           email: message.email,
         });
       });
-    });
+    }); */
     socket.on("message", ({ text, Img, email }) => {
       console.log(text, Img, email);
       createMessage({ text, Img, email, time: null });

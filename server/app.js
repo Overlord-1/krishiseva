@@ -17,8 +17,10 @@ app.use(express.json());
 
 // Routes
 const login = require("./routes/login");
+const messages = require("./routes/getMessages");
 const e = require("express");
 app.use("/api", login);
+app.use("/api/messages", messages);
 
 // Create HTTP server
 const server = chat(app);

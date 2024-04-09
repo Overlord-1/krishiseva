@@ -12,9 +12,4 @@ const createMessage = async (obj, socket) => {
   }
 };
 
-const getMessages = async () => {
-  const allMessages = await Message.find({});
-  return allMessages;
-};
-
-module.exports = { createMessage, getMessages };
+module.exports = { createMessage };
