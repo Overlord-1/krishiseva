@@ -15,6 +15,7 @@ const Chat = ({messageSent,socket}) => {
     });    
   }, []);
 
+//this function handles the messages sent by the user logged in 
   const handleSendMessage = (message) => {
     console.log('Message sent:', message);
     setMessages(prevMessages => [...prevMessages, {
@@ -23,6 +24,8 @@ const Chat = ({messageSent,socket}) => {
     }]);
     messageSent(message);
   };
+
+//this function handles the messages sent by the OTHER user by socket emitting 
 
   useEffect(() => {
     const handleNewMessage = (data) => {
