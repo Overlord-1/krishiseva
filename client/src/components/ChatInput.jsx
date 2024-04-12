@@ -15,8 +15,11 @@ const ChatInput = ({ onSendMessage }) => {
     }
  };
 
+ // Determine the shadow class based on the input length
+ const shadowClass = message.length > 0 ? 'shadow-xl' : 'shadow';
+
  return (
-    <form onSubmit={handleSubmit} className="flex items-center p-4">
+    <form onSubmit={handleSubmit} className={`flex items-center p-4 ${shadowClass}`}>
       <input
         type="text"
         value={message}

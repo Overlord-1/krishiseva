@@ -5,6 +5,8 @@ import axios from "axios";
 
 const Chat = ({messageSent,socket,time}) => {
   const [messages, setMessages] = useState([]);
+
+
   //this loads all the messsages from the db
   useEffect(() => {
     axios.get("http://localhost:4000/api/messages").then((response) => {
@@ -39,12 +41,11 @@ const Chat = ({messageSent,socket,time}) => {
 
     socket.on("recvMessage", handleNewMessage);
 
-    // Clean up the effect
     return () => socket.off("recvMessage", handleNewMessage);
   }, [socket]);
 
   return (
-    <div className="w-full bg-blue-400 h-screen">
+    <div className="w-full bg-blue-950 h-screen">
         <ChatComp messages={messages} />
       <div className=" h-screen w-full fixed top-[760px]">
         <ChatInput onSendMessage={handleSendMessage}  />

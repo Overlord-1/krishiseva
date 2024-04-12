@@ -28,13 +28,13 @@ const findUser = async (req, res) => {
     // console.log(req.body);
     const user = await User.findOne({ email: email });
     if (!user)
-      return res.status(400).json({ fetch: "un-successful, usernotFound" });
+      return res.status(400).json({ fetch: "User not found please Sign Up" });
     if (user.password === password)
       return res.status(201).json({ fetch: "successful", user });
     else
       return res
         .status(400)
-        .json({ fetch: "un-successful, please enter correct password" });
+        .json({ fetch: "Login unsuccessful, please enter correct password" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ err });

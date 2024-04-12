@@ -2,7 +2,9 @@ import React, { useRef, useState } from "react";
 import down from "../assets/down.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import {motion} from "framer-motion";
 import Splash from "../components/Splash";
+import LightLogo from "/logos/krishiseva-high-resolution-logo-black.png";
 
 // const handleLogin = async (e) => {
 //     e.preventDefault();
@@ -23,10 +25,15 @@ import Splash from "../components/Splash";
 const Login = () => {
   const [registerError, setRegisterError] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showSplash, setShowSplash] = useState(false);
   const loginButtonRef = useRef(null);
-  const [splashStartPosition, setSplashStartPosition] = useState({ top: 0, left: 0, width: 0, height: 0 });
-
+  const [splashStartPosition, setSplashStartPosition] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0,
+  });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -39,6 +46,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.get(
@@ -64,67 +72,70 @@ const Login = () => {
         window.location.href = "/dashboard";
       }, 1000);
     } catch (error) {
+      setLoading(false);
       console.error("Error registering user:", error);
       setRegisterError(true);
       setMessage(error.response.data.fetch);
     }
   };
   return (
-    <div className="main flex mx-auto items-center justify-between h-screen flex-col bg-gradient-to-b from-blue-400 to-white">
-      <div className="flex mx-auto items-center justify-end md:justify-center h-screen flex-col">
-        {/* <Tractor color='rgb(74 222 128)' size={70} />   //previous used logo*/}
-        <h1 className="text-6xl mb-7 mainText font-bold uppercase">
-          कृषि SEVA
-        </h1>
-        {registerError && (
-          <p className="text-white bg-red-500 p-3 m-3 rounded-full">
-            {message}
-          </p>
-        )}
+    <div className="bg-white w-full h-screen flex flex-col lg:flex-row lg:items-center">
+      <div className="leftSide w-full lg:w-[40%]">
+        <img
+          src={LightLogo}
+          alt="krishiseva logo light mode"
+          width={299}
+          className="mx-auto"
+        />
+      </div>
+      <div className="rightSide flex flex-col">
+        <div className="font-extrabold text-center mx-3 text-black text-[19px] lg:text-3xl">
+        Increase your crop yield with our advisories and personalized features
+        </div>
         <form
-          className="flex flex-col justify-center items-center"
+          className="flex flex-col justify-center items-center mt-24"
           onSubmit={handleSubmit}
         >
           <input
             type="email"
             name="email"
-            placeholder="Enter your email"
-            className="bg-black text-white p-5 rounded-xl m-3"
+            placeholder="Enter your email" 
+            className="bg-[#D9D9D9] text-black p-5 rounded-xl m-3b lg:w-[400px]"
             onChange={handleChange}
           />
           <input
             type="password"
             name="password"
             placeholder="Enter your password"
-            className="border-green-500  text-white p-5 bg-black rounded-xl m-3"
+            className=" text-black p-5 bg-[#D9D9D9] rounded-xl m-3 lg:w-[400px]"
             onChange={handleChange}
           />
           <button
             type="submit"
-            className="bg-green-400 w-[150px] p-5 rounded-xl"
+            className="bg-black w-[150px] p-5 rounded-xl m-3 lg:w-[300px] lg:mt-5 text-white hover:bg-[#333] focus:outline-none focus:ring-2 focus:ring-[#333] focus:ring-opacity-50"
             ref={loginButtonRef}
           >
-            Login
+            {loading ? "Logging in..." : "Get Started"}
           </button>
-          <div className="mt-4">
-            Not our part yet ?
-            <a href="/" className="ml-2 text-green-400">
-              <Link to="/">Sign Up</Link>
-            </a>
+            {registerError && ( <div className="text-red-500 text-lg font-semibold">{message}</div>)}
+          </form>
+          <div className="mt-14 mx-auto">         
+         <div href="/" className="ml-2 text-black opacity-70">
+              <Link to="/"> Not our part yet ? Join Now</Link>
           </div>
-        </form>
-      </div>
-
-      <img src={down} alt="" className="w-full md:hidden" />
-      {/* This is chahts idea */}
-      {showSplash && (
+          {showSplash && (
         <Splash
           onComplete={() => setShowSplash(false)}
           startPosition={splashStartPosition}
         />
       )}
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Login;
+
+
+
