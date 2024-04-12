@@ -4,6 +4,7 @@ const getMessages = async (req, res) => {
     const allMessages = await Message.find({});
     res.send(allMessages);
   } catch (err) {
+    console.log(err);
     return null;
   }
 };

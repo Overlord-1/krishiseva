@@ -2,10 +2,7 @@ require("dotenv").config();
 const connectDB = require("./db/connect");
 const express = require("express");
 const cors = require("cors");
-const { Server } = require("socket.io");
-const { createServer } = require("http");
 const chat = require("./chat/chat.js");
-
 const url = process.env.MONG_URI;
 const port = 4000;
 
@@ -18,10 +15,10 @@ app.use(express.json());
 // Routes
 const login = require("./routes/login");
 const messages = require("./routes/getMessages");
-const e = require("express");
+const forum = require("./routes/forum");
 app.use("/api", login);
 app.use("/api/messages", messages);
-
+app.use("/api/forum", forum);
 // Create HTTP server
 const server = chat(app);
 

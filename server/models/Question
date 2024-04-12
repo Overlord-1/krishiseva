@@ -1,0 +1,21 @@
+const mongoose = require("mongoose");
+const questionSchema = new mongoose.Schema({
+  questionString: {
+    type: String,
+    required: true,
+  },
+  user: {
+    type: mongoose.mongoose.Schema.Types.ObjectId,
+    ref: "users",
+    required: true,
+  },
+  likes: { type: Number, default: 0 },
+  dislikes: { type: Number, default: 0 },
+  parentQuestion: {
+    type: mongoose.mongoose.Schema.Types.ObjectId,
+    ref: "Question",
+    default: null,
+  },
+});
+
+module.exports = mongoose.model("Question", questionSchema);
