@@ -85,13 +85,11 @@ const getAnswers = async (req, res) => {
   try {
     let query = {};
 
-    if (req.body.parentQuestion) {
-      query.parentQuestion = req.body.parentQuestion;
-    }
+    query.parentQuestion = req.body.parentQuestion
+      ? req.body.parentQuestion
+      : null;
 
-    if (req.body.parentAnswer) {
-      query.parentAnswer = req.body.parentAnswer;
-    }
+    query.parentAnswer = req.body.parentAnswer ? req.body.parentAnswer : null;
 
     const answers = await Answer.find(query);
     if (!answers) return res.status(404).json({ err: "Answers not found" });
@@ -106,28 +104,16 @@ const getAnswers = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    let query = {},
-      questions;
+    let query = {};
+    console.log(req.body);
 
-    if (req.body.parentQuestion) {
-      query.parentQuestion = req.body.parentQuestion;
-    }
+    query.parentQuestion = req.body.parentQuestion
+      ? req.body.parentQuestion
+      : null;
+    query.parentAnswer = req.body.parentAnswer ? req.body.parentAnswer : null;
 
-    if (req.body.parentAnswer) {
-      query.parentAnswer = req.body.parentAnswer;
-    }
-    if (!(query.parentQuestion && query.parentAnswer)) {
-      questions = await Question.find({
-        $and: [
-          { parentQuestion: "6619850c110d3aedae7ea015" },
-          { parentAnswer: null },
-        ], //global question
-      });
-      return res.status(200).json({ questions });
-    }
-    questions = await Question.find(query);
+    const questions = await Question.find(query);
     const answers = await Answer.find(query);
-    console.log(answers);
     return res.status(200).json({ questions, answers });
   } catch (err) {
     console.error(err);

@@ -14,7 +14,7 @@ const questionSchema = new mongoose.Schema({
   parentQuestion: {
     type: mongoose.mongoose.Schema.Types.ObjectId,
     ref: "Question",
-    default: "6619850c110d3aedae7ea015",
+    default: null,
   },
   parentAnswer: {
     type: mongoose.Schema.Types.ObjectId,
