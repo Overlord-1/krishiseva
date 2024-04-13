@@ -7,6 +7,7 @@ const createQuestion = async (req, res) => {
       user: req.body.user,
       questionString: req.body.questionString,
       parentQuestion: req.body.parentQuestion,
+      parentAnswer: req.body.parentAnswer,
       likes: req.body.likes,
       dislikes: req.body.dislikes,
     };
@@ -33,17 +34,27 @@ const getQuestion = async (req, res) => {
   }
 };
 //edit question
-const editQuestion = async (req, res) => {
+const edit = async (req, res) => {
   try {
-    const { id, likes, dislikes } = req.body;
-    const question = await Question.findOne({ _id: id });
-    if (!question) {
-      return res.status(404).json({ err: "Question not found" });
+    let element;
+    const id = req.body.id;
+    const toPerform = req.body.toPerform;
+    const incOrDec = req.body.incOrDec;
+    element =
+      (await Question.findOne({ _id: id })) ||
+      (await Answer.findOne({ _id: id }));
+
+    if (!element) {
+      return res.status(404).json({ err: "Question/answer not found" });
     }
-    question.likes = likes;
-    question.dislikes = dislikes;
-    question.save();
-    return res.status(200).json({ question });
+    if (toPerform === "like") {
+      element.likes += incOrDec === "inc" ? 1 : -1;
+    } else if (toPerform === "dislike") {
+      element.dislikes += incOrDec === "inc" ? 1 : -1;
+    }
+
+    element.save();
+    return res.status(200).json({ element });
   } catch (err) {
     console.log(err);
   }
@@ -58,6 +69,7 @@ const createAnswer = async (req, res) => {
       parentQuestion: req.body.parentQuestion,
       parentAnswer: req.body.parentAnswer,
     };
+
     const answer = await Answer.create(content);
     return res.status(201).json({ answer });
   } catch (err) {
@@ -71,12 +83,17 @@ const createAnswer = async (req, res) => {
 // Get all answers for a parentQuestion or parentAnswer
 const getAnswers = async (req, res) => {
   try {
-    const answers = await Answer.find({
-      $or: [
-        { parentQuestion: req.params.parentQuestion },
-        { parentAnswer: req.params.parentAnswer },
-      ],
-    });
+    let query = {};
+
+    if (req.body.parentQuestion) {
+      query.parentQuestion = req.body.parentQuestion;
+    }
+
+    if (req.body.parentAnswer) {
+      query.parentAnswer = req.body.parentAnswer;
+    }
+
+    const answers = await Answer.find(query);
     if (!answers) return res.status(404).json({ err: "Answers not found" });
     return res.status(200).json({ answers });
   } catch (err) {
@@ -89,7 +106,8 @@ const getAnswers = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    let query = {};
+    let query = {},
+      questions;
 
     if (req.body.parentQuestion) {
       query.parentQuestion = req.body.parentQuestion;
@@ -98,8 +116,16 @@ const getAll = async (req, res) => {
     if (req.body.parentAnswer) {
       query.parentAnswer = req.body.parentAnswer;
     }
-
-    const questions = await Question.find(query);
+    if (!(query.parentQuestion && query.parentAnswer)) {
+      questions = await Question.find({
+        $and: [
+          { parentQuestion: "6619850c110d3aedae7ea015" },
+          { parentAnswer: null },
+        ], //global question
+      });
+      return res.status(200).json({ questions });
+    }
+    questions = await Question.find(query);
     const answers = await Answer.find(query);
     console.log(answers);
     return res.status(200).json({ questions, answers });
@@ -114,7 +140,7 @@ const getAll = async (req, res) => {
 module.exports = {
   createQuestion,
   getQuestion,
-  editQuestion,
+  edit,
   createAnswer,
   getAnswers,
   getAll,
