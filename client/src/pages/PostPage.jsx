@@ -37,7 +37,7 @@ const PostPage = () => {
       <Header />
       <div className="flex flex-grow">
         <LeftBar />
-        <div className="bg-black w-full overflow-hidden flex-grow p-8">
+        <div className="bg-black w-full overflow-hidden flex-grow p-10">
           {questions.map((question, index) => (
             <div key={index} className="bg-gray-800 w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4">
               <div className="text-2xl font-bold mb-2"># {question.string}</div>
