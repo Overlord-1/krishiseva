@@ -8,27 +8,31 @@ import chat from "../assets/chat.svg";
 import cropcycle from "../assets/cropcycle.svg";
 import leafrecog from "../assets/leafrecog.svg";
 import Chat from "../components/Chat";
-import {format} from "date-fns";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-
+import axios from "axios";
+import LeftBar from "@/components/LeftBar";
 
 const Dashboard = () => {
-
   const socket = useMemo(() => io("http://localhost:4000"), []);
   const time = format(new Date(), "hh:mm aaa");
-
 
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to server");
     });
   }, [socket]);
-
+  
   const handleMessageSent = (message) => {
-    const jsonMsg = { text: message, Img: null, email: localStorage.getItem("email"), time: time}
+    const jsonMsg = {
+      text: message,
+      Img: null,
+      email: localStorage.getItem("email"),
+      time: time,
+    };
     console.log(jsonMsg);
-    socket.emit("message",jsonMsg);
-  }
+    socket.emit("message", jsonMsg);
+  };
 
   const [pageState, setPageState] = useState(2);
   const handleFooterClick = (e) => {
@@ -44,17 +48,10 @@ const Dashboard = () => {
 
   // socket.emit("message", {text:"putTextHere", Img:"putImgHere", email:"formLocal"})
 
-
-
-
   return (
-    
     <div className="">
       <Header />
-      <div className="leftBar h-screen bg-black hidden lg:flex lg:w-[300px]">
-        <Button>Please work shadcn </Button>
-      </div>
-      
+      <LeftBar />
     </div>
   );
 };
