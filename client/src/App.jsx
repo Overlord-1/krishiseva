@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router'
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import PostPage from './pages/PostPage';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Register />} />
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path="/posts/:postID" element={<PostPage />} />
         </Routes>
 
     </>
