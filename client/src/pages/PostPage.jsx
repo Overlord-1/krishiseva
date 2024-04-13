@@ -38,20 +38,22 @@ const PostPage = () => {
       <div className="flex flex-grow">
         <LeftBar />
         <div className="bg-black w-full overflow-hidden flex-grow p-8">
-          <div className="text-2xl font-bold text-white mb-4">
-            # {questions[0]?.string}
-          </div>
-          <div className="flex justify-between text-white mb-4">
-            <div>Likes: {questions[0]?.likes}</div>
-            <div>Dislikes: {questions[0]?.dislikes}</div>
-          </div>
-          <div className="bg-gray-800 w-full overflow-hidden p-4 rounded-lg mb-4">
-            {subQuestions.map((question, index) => (
-              <div key={index} className="text-xl text-white mb-2">
-                # {question.string}
+          {questions.map((question, index) => (
+            <div key={index} className="bg-gray-800 w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4">
+              <div className="text-2xl font-bold mb-2"># {question.string}</div>
+              <div className="flex justify-between items-center mb-2">
+                <div>Likes: {question.likes}</div>
+                <div>Dislikes: {question.dislikes}</div>
               </div>
-            ))}
-          </div>
+              <div className="bg-gray-700 w-full overflow-hidden p-4 rounded-lg">
+                {subQuestions.map((subQuestion, subIndex) => (
+                 <div key={subIndex} className="text-xl text-white mb-2">
+                    # {subQuestion.string}
+                 </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
