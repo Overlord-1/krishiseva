@@ -9,6 +9,7 @@ import cropcycle from "../assets/cropcycle.svg";
 import leafrecog from "../assets/leafrecog.svg";
 import Chat from "../components/Chat";
 import {format} from "date-fns";
+import { Button } from "@/components/ui/button";
 
 
 const Dashboard = () => {
@@ -51,7 +52,7 @@ const Dashboard = () => {
     <div className="">
       <Header />
       <div className="leftBar h-screen bg-black hidden lg:flex lg:w-[300px]">
-        
+        <Button>Please work shadcn </Button>
       </div>
       
     </div>
