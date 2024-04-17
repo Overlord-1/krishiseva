@@ -1,5 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const sharp = require("sharp");
+const upload = multer({ dest: "uploads/" });
+
 const {
   // getQuestion,
   // createQuestion,
@@ -20,5 +24,16 @@ const {
 router.route("/createElement").post(createElement);
 router.route("/editElement").post(editElement);
 router.route("/getAllElements").post(getAllElements);
+try {
+  router
+    .route("/imgs")
+    .post(upload.single("myFile"), (req, res) => {
+      console.log("Body: ", req.body);
+      console.log("File: ", req.file);
+      res.send("File successfully uploaded.");
+    })
+    .get((req, res) => res.send(sharp("/server/uploads").png()));
+} catch (err) {
+  console.log(err);
+}
 module.exports = router;
-// Path: server/models/Question.js

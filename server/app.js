@@ -28,18 +28,42 @@ const start = async () => {
     server.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
     });
-
-    const hello = await fetch("http://127.0.0.1:5000/what/33", {
-      method: "POST",
-      body: {},
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    }).then((response) => response.json());
-    console.log(hello);
   } catch (err) {
     console.error("Error starting the server:", err.message);
   }
 };
 
+//NOTE:
+// const { OpenAI } = require("openai");
+// const openai = new OpenAI({
+//   apiKey: "",
+// });
+// async function main() {
+//   const completion = await openai.chat.completions.create({
+//     messages: [{ role: "system", content: "what is height of mount everest" }],
+//     model: "gpt-3.5-turbo",
+//   });
+
+//   console.log(completion.choices[0]);
+// }
+
+main();
+
+// const response = async () => {
+//   try {
+//     const resp = await openai.createChatCompletion({
+//       id: "org-yiPuiDQdBpfT0f7THKJJWoEW",
+//       object: "chat.completion",
+//       created: 1677858242,
+//       model: "text-",
+//     });
+//     console.log(resp);
+//     console.log(resp.data.choices[0].message.content);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// openai.createChatCompletion({});
 start();
+main();
