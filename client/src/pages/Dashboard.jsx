@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "../Dashboard.css";
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
 import io from "socket.io-client";
 import { motion } from "framer-motion";
 import chat from "../assets/chat.svg";
@@ -50,7 +48,6 @@ const Dashboard = () => {
 
   return (
     <div className="">
-      <Header />
       <LeftBar />
     </div>
   );
