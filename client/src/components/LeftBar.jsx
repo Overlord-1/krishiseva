@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import logo from "/logos/krishiseva-high-resolution-logo-black.png";
+import SiteButton from "./SiteButton";
 
 const LeftBar = () => {
   const [questions, setQuestions] = useState([]);
@@ -17,30 +19,26 @@ const LeftBar = () => {
   }, []);
 
   return (
-    <div className="leftBar bg-white hidden lg:flex lg:w-[300px] lg:flex-col border-r-2 border-solid border-slate-400 ">
-      <div className="border-b-2 border-solid border-slate-400 ">
-        <button className="bg-black w-[80%] p-5 rounded-xl m-3 text-white hover:bg-[#333] focus:outline-none focus:ring-2 focus:ring-[#333] focus:ring-opacity-50">
-          ✔ Crop Cycle
-        </button>
-        <button className="bg-black w-[80%] p-5 rounded-xl m-3 mt-3 text-white hover:bg-[#333] focus:outline-none focus:ring-2 focus:ring-[#333] focus:ring-opacity-50">
-          🍀 Leaf Recognition
-        </button>
+    <div className="leftBar items-center bg-white hidden lg:flex lg:w-[290px] lg:flex-col border-r-2 border-solid border-slate-400 ">
+      <img src={logo} alt="" className="w-[156px]" />
+      <div className="pb-7 border-b-2 border-solid border-slate-500 flex flex-col justify-center items-center">
+        <div className="font-semibold text-[20px]">AI tools</div>
+        <SiteButton text={"Crop Cycle"} width={257} height={56} />
+        <SiteButton text={"Leaf Recong"} width={257} height={56} />
       </div>
-      <div className="topquestoins bg-black">
-        <div className="text-2xl bg-black p-3 text-white font-bold border-b-2 border-solid border-slate-400 ">
-          🔥 Top Questions
-        </div>
-        <div>
-          {questions.map((question, index) => (
-            <Link key={index} to={`/posts/${question._id}`}>
-              <div className="p-3 bg-black text-white border-b-2 border-solid border-slate-400 hover:bg-slate-700 hover:cursor-pointer">
-                {question.string}
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
+      <div className="font-semibold text-[20px] mt-14"> 🔥 Top Questions</div>
+      <div className="flex flex-col mt-4">
+        {questions.map((question) => (
+          
+          <Link to={`/posts/${question._id}`} key={question._id} className="text-[#000000] text-[16px] font-semibold bg-[#D9D9D9] px-10 py-2
+          m-3 rounded-md">
+            {question.string}
+          </Link>
+
+        ))}
+
     </div>
+  </div>
   );
 };
 
