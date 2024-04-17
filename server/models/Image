@@ -1,0 +1,15 @@
+const mongoose = require("mongoose");
+
+const imageSchema = new mongoose.Schema({
+  name: String, // Original name of the uploaded image file
+  image: String, // File path or URL to access the uploaded image
+  parentElement: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Element",
+    required: true,
+  },
+});
+
+const Image = mongoose.model("Image", imageSchema);
+
+module.exports = Image;
