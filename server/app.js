@@ -28,6 +28,15 @@ const start = async () => {
     server.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
     });
+
+    const hello = await fetch("http://127.0.0.1:5000/what/33", {
+      method: "POST",
+      body: {},
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }).then((response) => response.json());
+    console.log(hello);
   } catch (err) {
     console.error("Error starting the server:", err.message);
   }
