@@ -1,5 +1,5 @@
 require("dotenv").config();
-const connectDB = require("./db/connect");
+const connectDB = require("./services/connect");
 const express = require("express");
 const cors = require("cors");
 const chat = require("./chat/chat.js");
@@ -16,9 +16,12 @@ app.use(express.json());
 const login = require("./routes/login");
 const messages = require("./routes/getMessages");
 const forum = require("./routes/forum");
+const gemini = require("./routes/gemini");
 app.use("/api", login);
 app.use("/api/messages", messages);
 app.use("/api/forum", forum);
+app.use("/api/gemini", gemini);
+
 // Create HTTP server
 const server = chat(app);
 
@@ -47,8 +50,6 @@ const start = async () => {
 //   console.log(completion.choices[0]);
 // }
 
-main();
-
 // const response = async () => {
 //   try {
 //     const resp = await openai.createChatCompletion({
@@ -64,6 +65,4 @@ main();
 //   }
 // };
 
-// openai.createChatCompletion({});
 start();
-main();
