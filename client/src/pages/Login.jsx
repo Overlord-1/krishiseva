@@ -80,7 +80,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-[#424342] w-full h-screen flex flex-col lg:flex-row lg:items-center">
+    <div className="bg-[#0a210f] w-full h-screen flex flex-col lg:flex-row lg:items-center">
       <div className="leftSide w-full lg:w-[40%]">
         <img
           src={LightLogo}
@@ -90,7 +90,7 @@ const Login = () => {
         />
       </div>
       <div className="rightSide flex flex-col">
-        <div  className="font-extrabold text-center mx-3 text-[#149911] text-[19px] lg:text-3xl">
+        <div  className="font-light text-center mx-3 text-[#e1e289] text-[19px] lg:text-3xl">
         Increase your crop yield with our advisories and personalized features
         </div>
         <form
@@ -101,19 +101,19 @@ const Login = () => {
             type="email"
             name="email"
             placeholder="Enter your email" 
-            className="bg-[#D9D9D9] text-black p-5 rounded-xl m-3b lg:w-[400px]"
+            className="bg-[#D9D9D9] text-black p-5 rounded-xl m-3b lg:w-[800px]"
             onChange={handleChange}
           />
           <input
             type="password"
             name="password"
             placeholder="Enter your password"
-            className=" text-black p-5 bg-[#D9D9D9] rounded-xl m-3 lg:w-[400px]"
+            className=" text-black p-5 bg-[#D9D9D9] rounded-xl m-3 lg:w-[800px]"
             onChange={handleChange}
           />
           <button
             type="submit"
-            className="bg-black w-[150px] p-5 rounded-xl m-3 lg:w-[300px] lg:mt-5 text-white hover:bg-[#333] focus:outline-none focus:ring-2 focus:ring-[#333] focus:ring-opacity-50"
+            className="bg-[#99aa38] w-[150px] p-5 rounded-xl m-3 lg:w-[300px] lg:mt-5 text-[#0a210f] font-bold hover:bg-[#e1e289] focus:outline-none focus:ring-2 focus:ring-[#333] focus:ring-opacity-50"
             ref={loginButtonRef}
           >
             {loading ? "Logging in..." : "Get Started"}
@@ -121,7 +121,7 @@ const Login = () => {
             {registerError && ( <div className="text-red-500 text-lg font-semibold">{message}</div>)}
           </form>
           <div className="mt-14 mx-auto">         
-         <div href="/" className="ml-2 text-black opacity-70">
+         <div href="/" className="ml-2 text-[#e1e289] opacity-70">
               <Link to="/"> Not our part yet ? Join Now</Link>
           </div>
           {showSplash && (
