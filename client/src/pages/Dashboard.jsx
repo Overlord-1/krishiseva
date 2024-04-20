@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import "../Dashboard.css";
 import io from "socket.io-client";
 import { motion } from "framer-motion";
 import chat from "../assets/chat.svg";
@@ -10,6 +9,7 @@ import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import LeftBar from "@/components/LeftBar";
+import Navbar from "@/components/Navbar/Navbar";
 
 const Dashboard = () => {
   const socket = useMemo(() => io("http://localhost:4000"), []);
@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   return (
     <div className="">
-      <LeftBar />
+      <Navbar />
     </div>
   );
 };

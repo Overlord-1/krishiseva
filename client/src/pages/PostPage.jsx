@@ -60,7 +60,7 @@ const PostPage = () => {
       <div className="flex flex-grow">
         <LeftBar />
         <div className=" w-full overflow-hidden flex-grow">
-          <div className="bg-black rounded-sm shadow-xl w-full text-white text-[40px] lg:px-20 py-7 font-bold mx-auto px-3">
+          <div className="bg-black shadow-xl w-full text-white text-[40px] lg:px-20 py-7 font-bold mx-auto px-3">
             {questions[0]?.string}
           </div>
           <div>
@@ -140,6 +140,8 @@ const PostPage = () => {
               </div>
             </div>
           ))} */}
+
+          
         </div>
       </div>
     </div>
