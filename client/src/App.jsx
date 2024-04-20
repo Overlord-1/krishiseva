@@ -8,6 +8,7 @@ import PostPage from './pages/PostPage';
 import Crop from './pages/Crop';
 import Leaf from './pages/Leaf';
 import Community from './pages/Community';
+import ErrorPage from './pages/ErrorPage';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path='/leaf' element={<Leaf />} />
             <Route path='/community' element={<Community />} />
             <Route path="/posts/:postID" element={<PostPage />} />
+            <Route path="*" element={<ErrorPage />} />
         </Routes>
 
     </>

@@ -8,7 +8,7 @@ const Navbar = ({text}) => {
     <div className="navbar flex items-center justify-center">
       {/* Sidebar */}
       <Sidebar/>
-      <div className="wrapper text-white lg:text-3xl text-xl fixed" >
+      <div className="wrapper text-white max-h-10 lg:text-3xl text-xl fixed" >
         <motion.span
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
