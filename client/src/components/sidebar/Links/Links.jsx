@@ -1,13 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import LightLogo from "/logos/krishiseva-high-resolution-logo-black.png";
+
 
 const Links = () => {
   return (
+    <div>
+      
     <div className='links'>
+    <img
+          src={LightLogo}
+          alt="krishiseva logo light mode"
+          width={299}
+          className="mx-auto"
+        />  
+        <div></div>  
       <Link to={"/crop"}>
         <motion.a
-          className='text-white'
+          className='text-[#99aa38]'
           whileHover={{
             textDecoration: "underline",
             textDecorationThickness: "9px",
@@ -28,12 +39,12 @@ const Links = () => {
             }
           }}
         >
-          Crop Predictor
+          Crop Insights
         </motion.a>
       </Link>
       <Link to={"/leaf"}>
         <motion.a
-          className='text-white'
+          className='text-[#99aa38]'
           whileHover={{
             textDecoration: "underline",
             textDecorationThickness: "9px",
@@ -54,12 +65,12 @@ const Links = () => {
             }
           }}
         >
-          Leaf Detector
+          Leaf Care Diagnostics
         </motion.a>
       </Link>
       <Link to={"/community"}>
         <motion.a
-          className='text-white'
+          className='text-[#99aa38]'
           whileHover={{
             textDecoration: "underline",
             textDecorationThickness: "9px",
@@ -80,9 +91,10 @@ const Links = () => {
             }
           }}
         >
-          Community Section
+          Farmers Forum
         </motion.a>
       </Link>
+    </div>
     </div>
   );
 };
