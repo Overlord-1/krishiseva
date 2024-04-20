@@ -16,7 +16,6 @@ const recognizeDisease = async (req, res) => {
     // await fs.unlink(existingImage.image);
     console.log("uploaded image");
     const response = await axios.get("http://127.0.0.1:5000/recognize");
-    console.log(response);
     res.send(response.data);
   } catch (error) {
     // Handle errors
