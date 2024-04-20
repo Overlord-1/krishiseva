@@ -1,8 +1,5 @@
-// const Question = require("../models/Question");
-// const Answer = require("../models/Answer");
 const Element = require("../models/Element");
-// const Image = require("../models/ Image");
-// const multer = require("multer");
+const { multerStorage, upload } = require("./img");
 
 const createElement = async (req, res) => {
   try {
@@ -83,20 +80,6 @@ module.exports = {
 // });
 
 // const upload = multer({ storage: storage }).single("image");
-
-// exports.uploadImage = async (req, res) => {
-//   try {
-//     upload(req, res, async function (err) {
-//       if (err instanceof multer.MulterError) {
-//         return res.status(500).json(err);
-//       } else if (err) {
-//         return res.status(500).json(err);
-//       }
-
-//       const newImage = new Image({
-//         name: req.file.originalname,
-//         image: req.file.path,
-//       });
 
 //       await newImage.save();
 
