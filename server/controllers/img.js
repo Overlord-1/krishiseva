@@ -72,3 +72,4 @@ const getIMG = async (req, res) => {
   }
 };
 module.exports = { upload, uploadImage, getAllImgs, multerStorage, getIMG };
+//hello
