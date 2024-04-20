@@ -1,10 +1,5 @@
-// const Question = require("../models/Question");
-// const Answer = require("../models/Answer");
 const Element = require("../models/Element");
-const multer = require("multer");
-
-// const Image = require("../models/ Image");
-// const multer = require("multer");
+const { multerStorage, upload } = require("./img");
 
 const createElement = async (req, res) => {
   try {

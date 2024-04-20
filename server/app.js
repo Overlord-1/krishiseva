@@ -17,7 +17,7 @@ const login = require("./routes/login");
 const messages = require("./routes/getMessages");
 const forum = require("./routes/forum");
 const gemini = require("./routes/gemini");
-app.use("/api", login);
+app.use("/api/login", login);
 app.use("/api/messages", messages);
 app.use("/api/forum", forum);
 app.use("/api/gemini", gemini);

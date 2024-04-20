@@ -17,6 +17,7 @@ const elementSchema = new mongoose.Schema({
     ref: "Element",
     default: null,
   },
+  // image: { type: String, default: null },
 });
 
 module.exports = mongoose.model("Element", elementSchema);
