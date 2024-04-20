@@ -6,8 +6,8 @@ const Links = () => {
   return (
     <div className='links'>
       <Link to={"/crop"}><a>Crop Predictor</a></Link>
-      <Link to={"/crop"}><a>Leaf Detector</a></Link>
-      <Link to={"/crop"}><a>Community Section</a></Link>
+      <Link to={"/leaf"}><a>Leaf Detector</a></Link>
+      <Link to={"/community"}><a>Community Section</a></Link>
     </div>
   )
 }

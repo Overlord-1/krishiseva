@@ -5,6 +5,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PostPage from './pages/PostPage';
+import Crop from './pages/Crop';
+import Leaf from './pages/Leaf';
+import Community from './pages/Community';
 
 
 function App() {
@@ -14,6 +17,9 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Register />} />
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/crop' element={<Crop />} />
+            <Route path='/leaf' element={<Leaf />} />
+            <Route path='/community' element={<Community />} />
             <Route path="/posts/:postID" element={<PostPage />} />
         </Routes>
 
