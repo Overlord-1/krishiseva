@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import down from "../assets/down.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 import {motion} from "framer-motion";
 import Splash from "../components/Splash";
 import LightLogo from "/logos/krishiseva-high-resolution-logo-black.png";
@@ -79,7 +80,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-white w-full h-screen flex flex-col lg:flex-row lg:items-center">
+    <div className="bg-[#424342] w-full h-screen flex flex-col lg:flex-row lg:items-center">
       <div className="leftSide w-full lg:w-[40%]">
         <img
           src={LightLogo}
@@ -89,7 +90,7 @@ const Login = () => {
         />
       </div>
       <div className="rightSide flex flex-col">
-        <div className="font-extrabold text-center mx-3 text-black text-[19px] lg:text-3xl">
+        <div  className="font-extrabold text-center mx-3 text-[#149911] text-[19px] lg:text-3xl">
         Increase your crop yield with our advisories and personalized features
         </div>
         <form
