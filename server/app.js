@@ -17,10 +17,12 @@ const login = require("./routes/login");
 const messages = require("./routes/getMessages");
 const forum = require("./routes/forum");
 const gemini = require("./routes/gemini");
+const ai = require("./routes/ai");
 app.use("/api/login", login);
 app.use("/api/messages", messages);
 app.use("/api/forum", forum);
 app.use("/api/gemini", gemini);
+app.use("/api/ai", ai);
 
 // Create HTTP server
 const server = chat(app);
