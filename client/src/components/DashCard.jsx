@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const DashCard = () => {
  return (
     <motion.div
-      className="bg-[#0a210f] text-white p-6 rounded-lg shadow-lg h-[500px] flex flex-col justify-between -mt-28"
+      className="bg-[#e1e289] text-white p-6 rounded-lg shadow-lg h-[500px] flex flex-col justify-between -mt-28"
       initial={{ x: -100, opacity: 0}}
       animate={{ x: 0, opacity: 1}}
       transition={{ duration: 0.5 }}

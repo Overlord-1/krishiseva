@@ -8,12 +8,12 @@ const Navbar = ({text}) => {
     <div className="navbar flex items-center justify-center">
       {/* Sidebar */}
       <Sidebar/>
-      <div className="wrapper text-[#0a210f] max-h-10 lg:text-3xl text-xl fixed" >
+      <div className="wrapper text-[#e1e289] max-h-10 lg:text-3xl text-xl fixed" >
         <motion.span
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-[#0a210f] font-bold text-3xl lg:text-5xl"
+          className="text-[#e1e289] font-bold text-3xl lg:text-5xl"
         >
           {text}
         </motion.span>

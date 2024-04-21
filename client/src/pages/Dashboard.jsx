@@ -48,7 +48,7 @@ const Dashboard = () => {
   // socket.emit("message", {text:"putTextHere", Img:"putImgHere", email:"formLocal"})
 
   return (
-    <div className="bg-[#e1e289]">
+    <div className="bg-[#0a210f]">
       <Navbar text={"कृषिseva"} />
       <div className="flex gap-[70px] w-full mx-auto items-center h-screen max-w-[90%]">
         <DashCard />
