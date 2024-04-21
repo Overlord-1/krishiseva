@@ -56,15 +56,14 @@ const PostPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-kdark">
       <div className="flex flex-grow">
-        <LeftBar />
         <div className=" w-full overflow-hidden flex-grow">
-          <div className="bg-black shadow-xl w-full text-white text-[40px] lg:px-20 py-7 font-bold mx-auto px-3">
+          <div className="bg-kdark shadow-xl w-full text-white text-[40px] lg:px-20 py-7 font-bold mx-auto px-3">
             {questions[0]?.string}
           </div>
           <div>
-            <div className="-mt-10 lg:text-[30px] text-white text-right">
+            <div className="-mt-6 lg:text-[30px] text-white text-right">
               <span className="text-[#FFFFFF] lg:mr-4 mr-2">
                 {questions[0]?.likes}
               </span>
@@ -96,9 +95,9 @@ const PostPage = () => {
           <div className="grid max-w-[826px] gap-2 mx-auto px-3 lg:ml-20 mt-4">
             <Textarea
               placeholder="Add a comment to enter the discussion"
-              className="bg-[#D9D9D9] text-black"
+              className="bg-klight text-kdark"
             />
-            <Button>Post</Button>
+            <Button className="bg-[#14591d]">Post</Button>
           </div>
 
           <div className="bg-gray-800 w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
