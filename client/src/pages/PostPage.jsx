@@ -100,7 +100,7 @@ const PostPage = () => {
             <Button className="bg-[#14591d]">Post</Button>
           </div>
 
-          <div className="bg-gray-800 w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
+          <div className="bg-klight w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
             <div className="text-2xl font-bold mb-2">Sub Questions</div>
             <div className="flex justify-between items-center mb-2">
               <div>Likes: 0</div>
