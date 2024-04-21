@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import LightLogo from "/logos/krishiseva-high-resolution-logo-black.png";
+import LightLogo from "/logos/krishiseva-high-resolution-logo-black2.png";
 
 
 const Links = () => {
@@ -18,7 +18,7 @@ const Links = () => {
         <div></div>  
       <Link to={"/crop"}>
         <motion.a
-          className='text-[#99aa38]'
+          className='text-[#0a210f] font-bold'
           whileHover={{
             textDecoration: "underline",
             textDecorationThickness: "9px",
@@ -44,7 +44,7 @@ const Links = () => {
       </Link>
       <Link to={"/leaf"}>
         <motion.a
-          className='text-[#99aa38]'
+          className='text-[#0a210f] font-bold'
           whileHover={{
             textDecoration: "underline",
             textDecorationThickness: "9px",
@@ -70,7 +70,7 @@ const Links = () => {
       </Link>
       <Link to={"/community"}>
         <motion.a
-          className='text-[#99aa38]'
+          className='text-[#0a210f] font-bold'
           whileHover={{
             textDecoration: "underline",
             textDecorationThickness: "9px",

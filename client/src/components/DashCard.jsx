@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const DashCard = () => {
  return (
     <motion.div
-      className="bg-[#e1e289] text-white p-6 rounded-lg shadow-lg h-[500px] flex flex-col justify-between -mt-28"
+      className="bg-[#e1e289] text-[#0a210f] p-6 rounded-lg shadow-lg h-[500px] flex flex-col justify-between -mt-28"
       initial={{ x: -100, opacity: 0}}
       animate={{ x: 0, opacity: 1}}
       transition={{ duration: 0.5 }}
@@ -18,7 +18,7 @@ const DashCard = () => {
       className="text-lg mb-6">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam iste accusamus maxime nisi placeat nemo necessitatibus. Incidunt, quisquam quasi temporibus ut hic non. Esse distinctio numquam, corrupti fuga suscipit omnis quae obcaecati natus autem quisquam repellat sint tempore? Consectetur, aliquam!
       </motion.p>
-      <button className="bg-white text-[#0a210f] px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+      <button className="bg-[#0a210f] text-[#e1e289] px-4 py-2 rounded-lg hover:bg-[#0a210f6a] transition-colors duration-200">
         Try Out
       </button>
     </motion.div>
