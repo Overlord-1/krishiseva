@@ -8,7 +8,7 @@ const run = async (req, res) => {
       `im a farmer living in the countryside of ${region}of india.accordingly answer the following:
        ${question}. `
     );
-    const response = await result.response;
+    const response = result.response;
     const text = response.text();
     console.log(text);
     res.send(text);

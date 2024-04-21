@@ -49,6 +49,7 @@ def predict():
     try:
     # Get data from the request
         request_data = request.get_json()
+        print("hello",request_data )
         nitrates = request_data.get('nitrates')
         phosphates = request_data.get('phosphates')
         potassium = request_data.get('potassium')
@@ -56,7 +57,6 @@ def predict():
         humidity = request_data.get('humidity')
         ph = request_data.get('ph')
         rainfall = request_data.get('rainfall')
-
          # Prepare the new data point
         new_data_point = [[nitrates, phosphates, potassium, temperature, humidity, ph, rainfall]]
 
@@ -69,7 +69,8 @@ def predict():
         # Return the prediction as JSON
         return jsonify({'predicted_crop': predicted_crop.tolist()})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(e)
+        return jsonify("error"), 500
 
 
 
