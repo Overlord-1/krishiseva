@@ -13,6 +13,7 @@ const Navbar = ({text}) => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
+          className="text-[#0a210f] font-bold text-3xl lg:text-5xl"
         >
           {text}
         </motion.span>

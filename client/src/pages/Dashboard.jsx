@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import LeftBar from "@/components/LeftBar";
 import Navbar from "@/components/Navbar/Navbar";
+import DashCard from "@/components/DashCard";
 
 const Dashboard = () => {
   const socket = useMemo(() => io("http://localhost:4000"), []);
@@ -20,7 +21,7 @@ const Dashboard = () => {
       console.log("Connected to server");
     });
   }, [socket]);
-  
+
   const handleMessageSent = (message) => {
     const jsonMsg = {
       text: message,
@@ -48,9 +49,11 @@ const Dashboard = () => {
 
   return (
     <div className="bg-[#e1e289]">
-      <Navbar text={"KrishiSeva"} />
-      <div className="text-5xl w-full flex justify-center h-screen items-center overflow-hidden">
-        Welcome to the Dashboard
+      <Navbar text={"कृषिseva"} />
+      <div className="flex gap-[70px] w-full mx-auto items-center h-screen max-w-[90%]">
+        <DashCard />
+        <DashCard />
+        <DashCard />
       </div>
     </div>
   );
