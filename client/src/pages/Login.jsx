@@ -51,7 +51,7 @@ const Login = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/${formData.email}/${formData.password}`
+        `http://localhost:4000/api/login/${formData.email}/${formData.password}`
       );
       console.log(response.data.user.name); // You can handle the response as needed
       console.log(response.data.user.email);

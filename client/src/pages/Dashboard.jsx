@@ -51,9 +51,10 @@ const Dashboard = () => {
     <div className="bg-[#0a210f]">
       <Navbar text={"कृषिseva"} />
       <div className="flex gap-[70px] w-full mx-auto items-center h-screen max-w-[90%]">
-        <DashCard />
-        <DashCard />
-        <DashCard />
+        <DashCard title= {"Send title here"} content = {"enter content here "} />
+        <DashCard title= {"Send title here"} content = {"enter content here "} />
+        <DashCard title= {"Send title here"} content = {"enter content here "} />
+        
       </div>
     </div>
   );

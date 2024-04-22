@@ -11,3 +11,6 @@ router.route("/recognize").post(upload.single("ai"), recognizeDisease);
 router.route("/predict/:id").get(test1);
 module.exports = router;
 // Path: server/routes/forum.js
+
+// recongnize  -- photo name "ai"
+// /recognize => res == name of the disease

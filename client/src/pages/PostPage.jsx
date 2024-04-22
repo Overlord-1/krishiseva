@@ -1,8 +1,8 @@
 import LeftBar from "@/components/LeftBar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { motion } from 'framer-motion'; 
+import { motion } from 'framer-motion';
 import chat from "../assets/chat.svg";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,8 +18,7 @@ import {
 const PostPage = () => {
   const { postID } = useParams();
   const [questions, setQuestions] = useState([]);
-  const [subQuestions, setSubQuestions] = useState([]);
-
+  const [subQuestions, setSubQuestions] = useState([])
   useEffect(() => {
     const getQuestions = async () => {
       const response = await axios.post(
@@ -43,21 +42,53 @@ const PostPage = () => {
     getSubQuestions();
   }, [postID]);
 
+
   // #TODO implement handleLikeButton
-  const handleLikeButton = () => {
-    console.log("Like button clicked");
-    // const response = axios.post(
-    //   "http://localhost:4000/api/forum/likeElement",
-    //   {
-    //     elementID: postID,
-    //   }
-    // );
-    // console.log(response);
+  // const handleLikeButton = async (ch) => {
+  //   // ch==='l'?console.log("Like button clicked"):console.log("Dislike button clicked");
+  //   // console.log(postID);
+  //     const response = await axios.post(
+  //       "http://localhost:4000/api/forum/editElement",
+  //       {
+  //         id: postID,
+  //         incOrDec: "inc",
+  //         toPerform: "like",
+  //       }
+  //     );
+  //   setQuestions(response.data.element)
+
+
+  //   console.log(response.data.element.likes);   
+  // };
+  const handleLikeButton = async (ch) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/forum/editElement",
+        {
+          id: postID,
+          incOrDec: "inc",
+          toPerform: "like",
+        }
+      );
+      
+      const updatedQuestions = questions.map(question => {
+        if (question._id === postID) {
+          return { ...question, likes: response.data.element.likes };
+        } else {
+          return question;
+        }
+      });
+
+
+      setQuestions(updatedQuestions);
+    } catch (error) {
+      console.error("Error occurred while liking the post:", error);
+    }
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-kdark">
-      <div className="flex flex-grow">
+    <div className="flex flex-col min-h-screen bg-kdark ">
+      <div className="flex flex-grow max-w-[1240px] mx-auto">
         <div className=" w-full overflow-hidden flex-grow">
           <div className="bg-kdark shadow-xl w-full text-white text-[40px] lg:px-20 py-7 font-bold mx-auto px-3">
             {questions[0]?.string}
@@ -76,7 +107,7 @@ const PostPage = () => {
             </div>
             <motion.button
               className="bg-black rounded-full w-10 h-10 text-lg mr-5"
-              onClick={() => handleLikeButton()}
+              onClick={() => handleLikeButton("l")}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -84,7 +115,7 @@ const PostPage = () => {
             </motion.button>
             <motion.button
               className="bg-black rounded-full w-10 h-10 text-lg"
-              onClick={() => handleLikeButton()}
+              onClick={() => handleLikeButton("d")}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -100,7 +131,7 @@ const PostPage = () => {
             <Button className="bg-[#14591d]">Post</Button>
           </div>
 
-          <div className="bg-klight w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
+          {/* <div className="bg-klight w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
             <div className="text-2xl font-bold mb-2">Sub Questions</div>
             <div className="flex justify-between items-center mb-2">
               <div>Likes: 0</div>
@@ -113,15 +144,15 @@ const PostPage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
-          <div className="max-w-sm text-white rounded overflow-hidden shadow-lg m-4 transition-all duration-700 ease-in-out bg-black hover:bg-white hover:text-black">
+          {/* <div className="max-w-sm text-white rounded overflow-hidden shadow-lg m-4 transition-all duration-700 ease-in-out bg-black hover:bg-white hover:text-black">
             <img className="w-10 text-white" src={chat} alt="User avatar" />
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2">Name</div>
               <p className=" text-base ">Contenet</p>
             </div>
-          </div>
+          </div> */}
 
           {/* {questions.map((question, index) => (
             <div key={index} className="bg-gray-800 w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4">
@@ -140,7 +171,7 @@ const PostPage = () => {
             </div>
           ))} */}
 
-          
+
         </div>
       </div>
     </div>
