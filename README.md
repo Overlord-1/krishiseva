@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Before running the AI model, ensure you have the following libraries installed:
+Before running the app, ensure you have the following libraries installed:
 
 - Flask: 3.0.3
 - NumPy: 1.24.3
