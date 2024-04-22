@@ -27,7 +27,7 @@ def recognize():
     try:
 # Load the single prediction image
 # test_image_path = '/Users/deeppatel/Desktop/single_prediction/attachments/3.JPG'
-        test_image_path = '/Users/deeppatel/Desktop/projects/krishiseva/server/ai/file.jpeg' 
+        test_image_path = '../server/ai/file.jpeg' 
         test_image = image.load_img(test_image_path, target_size=(64, 64))
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis=0)
