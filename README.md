@@ -11,12 +11,7 @@ Before running the app, ensure you have the following libraries installed:
 - TensorFlow: 2.15.0
 - Pickle: latest version
 
-You can install these dependencies using pip:
+You can install these dependencies using pip just navigate to the "server2" :
 
 ```bash
-pip install Flask==3.0.3
-pip install numpy==1.24.3
-pip install Pillow==10.3.0
-pip install scikit-learn==1.2.2
-pip install tensorflow==2.15.0
-pip install pickle
+pip install -r requirements.txt
