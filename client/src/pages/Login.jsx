@@ -53,12 +53,15 @@ const Login = () => {
       const response = await axios.get(
         `http://localhost:4000/api/login/${formData.email}/${formData.password}`
       );
+      // console.log(response.data.user);
       console.log(response.data.user.name); // You can handle the response as needed
       console.log(response.data.user.email);
       const email = response.data.user.email;
       const name = response.data.user.name;
+      const id = response.data.user._id;
       localStorage.setItem("email", email);
       localStorage.setItem("name", name);
+      localStorage.setItem("id", id);
       const buttonRect = loginButtonRef.current.getBoundingClientRect();
       const startPosition = {
         top: buttonRect.top,

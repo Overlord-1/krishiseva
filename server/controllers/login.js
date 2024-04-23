@@ -30,8 +30,10 @@ const findUser = async (req, res) => {
     const user = await User.findOne({ email: email });
     if (!user)
       return res.status(400).json({ fetch: "User not found please Sign Up" });
-    if (user.password === password)
+    if (user.password === password) {
+      // console.log(user._id);
       return res.status(201).json({ fetch: "successful", user });
+    }      // return res.status(201).json({ fetch: "successful", user });
     else
       return res
         .status(400)

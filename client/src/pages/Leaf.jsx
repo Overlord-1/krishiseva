@@ -49,7 +49,7 @@ const Leaf = () => {
       <div className="main-content w-full lg:overflow-hidden flex flex-col md:flex-row">
         <div className="leftside w-full lg:max-h-screen lg:w-1/2 relative flex flex-col items-center">
           <div className="text-2xl font-bold text-center">Upload Image</div>
-          <div className="imageupload ml-5 bg-transparent w-full md:w-[500px] h-[300px] mt-10 flex items-center justify-center">
+          <div className=" border-klight border-2 rounded-lg  imageupload ml-5 bg-transparent w-full md:w-[500px] h-[300px] mt-10 flex items-center justify-center">
             <input
               type="file"
               accept="image/*"
@@ -63,7 +63,7 @@ const Leaf = () => {
                   alt="Selected Image"
                   className="w-full md:w-[500px] h-[300px] object-cover rounded-lg"
                 />
-                <div className="text-[#0a210f] text-3xl text-center">Image Uploaded</div>
+                {/* <div className="text-[#0a210f] text-3xl text-center">Image Uploaded</div> */}
               </div>
             ) : (
               <img src={plusicon} width="110vw" alt="Plus Icon" />
