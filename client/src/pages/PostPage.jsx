@@ -2,7 +2,7 @@ import LeftBar from "@/components/LeftBar";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import chat from "../assets/chat.svg";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,12 +14,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import Heart from "react-animated-heart";
 
 const PostPage = () => {
   const [text, setText] = useState("");
   const { postID } = useParams();
   const [questions, setQuestions] = useState([]);
-  const [subQuestions, setSubQuestions] = useState([])
+  const [subQuestions, setSubQuestions] = useState([]);
   const [liked, setLiked] = useState(false);
   useEffect(() => {
     const getQuestions = async () => {
@@ -39,31 +40,10 @@ const PostPage = () => {
         }
       );
       setSubQuestions(response.data.element);
-      // console.log(response.data.element[0]);
     };
     getQuestions();
     getSubQuestions();
   }, [postID]);
-
-
-  // #TODO implement handleLikeButton
-  // const handleLikeButton = async (ch) => {
-  //   // ch==='l'?console.log("Like button clicked"):console.log("Dislike button clicked");
-  //   // console.log(postID);
-  //     const response = await axios.post(
-  //       "http://localhost:4000/api/forum/editElement",
-  //       {
-  //         id: postID,
-  //         incOrDec: "inc",
-  //         toPerform: "like",
-  //       }
-  //     );
-  //   setQuestions(response.data.element)
-
-
-  //   console.log(response.data.element.likes);   
-  // };
-
 
   const handlePostButton = async (ch) => {
     try {
@@ -97,7 +77,7 @@ const PostPage = () => {
         }
       );
 
-      const updatedQuestions = questions.map(question => {
+      const updatedQuestions = questions.map((question) => {
         if (question._id === postID) {
           return { ...question, likes: response.data.element.likes };
         } else {
@@ -105,13 +85,12 @@ const PostPage = () => {
         }
       });
 
-
       setQuestions(updatedQuestions);
     } catch (error) {
       console.error("Error occurred while liking the post:", error);
     }
   };
-
+  console.log("Sub  = ", subQuestions);
   return (
     <div className="flex flex-col min-h-screen bg-kdark ">
       <div className="flex flex-grow max-w-[1240px] mx-auto">
@@ -119,40 +98,12 @@ const PostPage = () => {
           <div className="bg-kdark shadow-xl w-full text-white text-[40px] lg:px-20 py-7 font-bold mx-auto px-3">
             {questions[0]?.string}
           </div>
-          <div>
-            <div className="-mt-6 lg:text-[30px] text-white text-right">
-              <span className="text-[#FFFFFF] lg:mr-4 mr-2">
-                {questions[0]?.likes}
-              </span>
-              people like this
-            </div>
-          </div>
           <div className="lg:ml-20 mt-10 flex items-center mx-auto px-3">
-            <div className="font-bold lg:mr-10 ">
-              Like this question ?Add a like to improve its ranking
+            <div className="font-bold lg:mr-10 flex items-center justify-center ">
+              <div>Like this question ?Add a like to improve its ranking</div>
+              <div className="ml-10 -mr-6">{questions[0]?.likes}</div>
+              <Heart isClick={liked} onClick={() => handleLikeButton()} />
             </div>
-            <motion.div
-              className="splash-container"
-              animate={{ scale: liked ? 1 : 1, opacity: liked ? 0.5 : 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.button
-                className="bg-black rounded-full w-10 h-10 text-lg mr-5"
-                onClick={() => handleLikeButton("l")}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {!liked ? "👍" : "👎"}
-              </motion.button>
-            </motion.div>
-            {/* <motion.button
-              className="bg-black rounded-full w-10 h-10 text-lg"
-              onClick={() => handleLikeButton("d")}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              👎
-            </motion.button> */}
           </div>
 
           <div className="grid max-w-[826px] gap-2 mx-auto px-3 lg:ml-20 mt-4">
@@ -162,59 +113,26 @@ const PostPage = () => {
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
-            <Button
-              onClick={() => handlePostButton()}
-              className="bg-[#14591d]">Post</Button>
+            <Button onClick={() => handlePostButton()} className="bg-[#14591d]">
+              Post
+            </Button>
           </div>
-
-          {/* <div className="bg-klight w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
-            <div className="text-2xl font-bold mb-2">Sub Questions</div>
-            <div className="flex justify-between items-center mb-2">
-              <div>Likes: 0</div>
-              <div>Dislikes: 0</div>
-            </div>
-            <div className="bg-gray-700 w-full overflow-hidden p-4 rounded-lg">
-              {subQuestions.map((subQuestion, subIndex) => (
-                <div key={subIndex} className="text-xl text-white mb-2">
-                  {subQuestion.string}
-                </div>
-              ))}
-            </div>
-          </div> */}
-
-          {/* <div className="max-w-sm text-white rounded overflow-hidden shadow-lg m-4 transition-all duration-700 ease-in-out bg-black hover:bg-white hover:text-black">
-            <img className="w-10 text-white" src={chat} alt="User avatar" />
-            <div className="px-6 py-4">
-              <div className="font-bold text-xl mb-2">Name</div>
-              <p className=" text-base ">Contenet</p>
-            </div>
-          </div> */}
-
-          {/* {questions.map((question, index) => (
-            <div key={index} className="bg-gray-800 w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4">
-              <div className="text-2xl font-bold mb-2"> {question.string}</div>
-              <div className="flex justify-between items-center mb-2">
-                <div>Likes: {question.likes}</div>
-                <div>Dislikes: {question.dislikes}</div>
-              </div>
-              <div className="bg-gray-700 w-full overflow-hidden p-4 rounded-lg">
-                {subQuestions.map((subQuestion, subIndex) => (
-                 <div key={subIndex} className="text-xl text-white mb-2">
-                     {subQuestion.string}
-                 </div>
-                ))}
-              </div>
-            </div>
-          ))} */}
           {subQuestions.map((subQuestion, subIndex) => (
-            <div className="lg:w-[500px] border-2 border-klight rounded-lg p-4 mt-5 mx-auto text-klight">
+            <div className="lg:w-[500px] max-w-[90%] border-2 border-klight border-opacity-50 rounded-lg p-4 mt-5 mx-auto text-klight">
               {/* <div className="font-bold mb-2">What is the capital of France?</div> */}
               <div>{subQuestion.string}</div>
+              {/* <div className="mt-5 rounded-lg p-3 w-[20%] flex h-10 ">
+                {subQuestion.likes}
+                <Heart
+                  styles={{
+                    marginTop: "-38px",
+                  }}
+                  isClick={liked}
+                  onClick={() => console.log("clicked")}
+                />
+              </div> */}
             </div>
           ))}
-
-
-
         </div>
       </div>
     </div>
