@@ -63,7 +63,7 @@ const Leaf = () => {
                   alt="Selected Image"
                   className="w-full md:w-[500px] h-[300px] object-cover rounded-lg"
                 />
-                <div className="text-[#0a210f] text-3xl text-center">Image Uploaded</div>
+                {/* <div className="text-[#0a210f] text-3xl text-center">Image Uploaded</div> */}
               </div>
             ) : (
               <img src={plusicon} width="110vw" alt="Plus Icon" />
