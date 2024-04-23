@@ -16,6 +16,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 
 const PostPage = () => {
+  const [text, setText] = useState("");
   const { postID } = useParams();
   const [questions, setQuestions] = useState([]);
   const [subQuestions, setSubQuestions] = useState([])
@@ -37,6 +38,7 @@ const PostPage = () => {
         }
       );
       setSubQuestions(response.data.element);
+      // console.log(response.data.element[0]);
     };
     getQuestions();
     getSubQuestions();
@@ -60,6 +62,25 @@ const PostPage = () => {
 
   //   console.log(response.data.element.likes);   
   // };
+  const handlePostButton = async (ch) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/forum/createElement",
+        {
+          user: localStorage.getItem("id"),
+          string: text,
+          parentElement: postID,
+        }
+      );
+
+      const updatedSubQuestions = [...subQuestions, response.data.element];
+
+      setSubQuestions(updatedSubQuestions);
+    } catch (error) {
+      console.error("Error occurred while posting the question:", error);
+    }
+  };
+
   const handleLikeButton = async (ch) => {
     try {
       const response = await axios.post(
@@ -70,7 +91,7 @@ const PostPage = () => {
           toPerform: "like",
         }
       );
-      
+
       const updatedQuestions = questions.map(question => {
         if (question._id === postID) {
           return { ...question, likes: response.data.element.likes };
@@ -127,8 +148,12 @@ const PostPage = () => {
             <Textarea
               placeholder="Add a comment to enter the discussion"
               className="bg-klight text-kdark"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
-            <Button className="bg-[#14591d]">Post</Button>
+            <Button
+            onClick={() => handlePostButton()} 
+            className="bg-[#14591d]">Post</Button>
           </div>
 
           {/* <div className="bg-klight w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
@@ -170,10 +195,13 @@ const PostPage = () => {
               </div>
             </div>
           ))} */}
-          <div className="lg:w-[500px] border-2 border-klight rounded-lg p-4 mt-5 mx-auto text-klight">
-            <div className="font-bold mb-2">What is the capital of France?</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quisquam commodi maiores reprehenderit ex. Quisquam inventore nam expedita quae sapiente.</div>
-        </div>
+          {subQuestions.map((subQuestion, subIndex) => (
+            <div className="lg:w-[500px] border-2 border-klight rounded-lg p-4 mt-5 mx-auto text-klight">
+              {/* <div className="font-bold mb-2">What is the capital of France?</div> */}
+              <div>{subQuestion.string}</div>
+            </div>
+          ))}
+
 
 
         </div>
