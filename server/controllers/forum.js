@@ -32,6 +32,7 @@ const editElement = async (req, res) => {
       element.likes += incOrDec === "inc" ? 1 : -1;
     } else if (toPerform === "dislike") {
       element.dislikes += incOrDec === "inc" ? 1 : -1;
+      element.likes -= incOrDec === "dec" ? 1 : -1;
     }
 
     await element.save();

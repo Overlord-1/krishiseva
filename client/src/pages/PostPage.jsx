@@ -16,9 +16,11 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 
 const PostPage = () => {
+  const [text, setText] = useState("");
   const { postID } = useParams();
   const [questions, setQuestions] = useState([]);
   const [subQuestions, setSubQuestions] = useState([])
+  const [liked, setLiked] = useState(false);
   useEffect(() => {
     const getQuestions = async () => {
       const response = await axios.post(
@@ -37,6 +39,7 @@ const PostPage = () => {
         }
       );
       setSubQuestions(response.data.element);
+      // console.log(response.data.element[0]);
     };
     getQuestions();
     getSubQuestions();
@@ -60,17 +63,40 @@ const PostPage = () => {
 
   //   console.log(response.data.element.likes);   
   // };
+
+
+  const handlePostButton = async (ch) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/forum/createElement",
+        {
+          user: localStorage.getItem("id"),
+          string: text,
+          parentElement: postID,
+        }
+      );
+      setText("");
+
+      const updatedSubQuestions = [...subQuestions, response.data.element];
+
+      setSubQuestions(updatedSubQuestions);
+    } catch (error) {
+      console.error("Error occurred while posting the question:", error);
+    }
+  };
+
   const handleLikeButton = async (ch) => {
+    setLiked(!liked);
     try {
       const response = await axios.post(
         "http://localhost:4000/api/forum/editElement",
         {
           id: postID,
-          incOrDec: "inc",
+          incOrDec: liked ? "dec" : "inc",
           toPerform: "like",
         }
       );
-      
+
       const updatedQuestions = questions.map(question => {
         if (question._id === postID) {
           return { ...question, likes: response.data.element.likes };
@@ -105,30 +131,40 @@ const PostPage = () => {
             <div className="font-bold lg:mr-10 ">
               Like this question ?Add a like to improve its ranking
             </div>
-            <motion.button
-              className="bg-black rounded-full w-10 h-10 text-lg mr-5"
-              onClick={() => handleLikeButton("l")}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <motion.div
+              className="splash-container"
+              animate={{ scale: liked ? 1 : 1, opacity: liked ? 0.5 : 1 }}
+              transition={{ duration: 0.3 }}
             >
-              👍
-            </motion.button>
-            <motion.button
+              <motion.button
+                className="bg-black rounded-full w-10 h-10 text-lg mr-5"
+                onClick={() => handleLikeButton("l")}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {!liked ? "👍" : "👎"}
+              </motion.button>
+            </motion.div>
+            {/* <motion.button
               className="bg-black rounded-full w-10 h-10 text-lg"
               onClick={() => handleLikeButton("d")}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
               👎
-            </motion.button>
+            </motion.button> */}
           </div>
 
           <div className="grid max-w-[826px] gap-2 mx-auto px-3 lg:ml-20 mt-4">
             <Textarea
               placeholder="Add a comment to enter the discussion"
               className="bg-klight text-kdark"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
-            <Button className="bg-[#14591d]">Post</Button>
+            <Button
+              onClick={() => handlePostButton()}
+              className="bg-[#14591d]">Post</Button>
           </div>
 
           {/* <div className="bg-klight w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
@@ -170,10 +206,13 @@ const PostPage = () => {
               </div>
             </div>
           ))} */}
-          <div className="lg:w-[500px] border-2 border-klight rounded-lg p-4 mt-5 mx-auto text-klight">
-            <div className="font-bold mb-2">What is the capital of France?</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quisquam commodi maiores reprehenderit ex. Quisquam inventore nam expedita quae sapiente.</div>
-        </div>
+          {subQuestions.map((subQuestion, subIndex) => (
+            <div className="lg:w-[500px] border-2 border-klight rounded-lg p-4 mt-5 mx-auto text-klight">
+              {/* <div className="font-bold mb-2">What is the capital of France?</div> */}
+              <div>{subQuestion.string}</div>
+            </div>
+          ))}
+
 
 
         </div>
