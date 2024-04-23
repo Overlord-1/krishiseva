@@ -20,6 +20,7 @@ const PostPage = () => {
   const { postID } = useParams();
   const [questions, setQuestions] = useState([]);
   const [subQuestions, setSubQuestions] = useState([])
+  const [liked, setLiked] = useState(false);
   useEffect(() => {
     const getQuestions = async () => {
       const response = await axios.post(
@@ -62,6 +63,8 @@ const PostPage = () => {
 
   //   console.log(response.data.element.likes);   
   // };
+
+
   const handlePostButton = async (ch) => {
     try {
       const response = await axios.post(
@@ -72,7 +75,7 @@ const PostPage = () => {
           parentElement: postID,
         }
       );
-      setText(""); 
+      setText("");
 
       const updatedSubQuestions = [...subQuestions, response.data.element];
 
@@ -83,12 +86,13 @@ const PostPage = () => {
   };
 
   const handleLikeButton = async (ch) => {
+    setLiked(!liked);
     try {
       const response = await axios.post(
         "http://localhost:4000/api/forum/editElement",
         {
           id: postID,
-          incOrDec: "inc",
+          incOrDec: liked ? "dec" : "inc",
           toPerform: "like",
         }
       );
@@ -127,22 +131,28 @@ const PostPage = () => {
             <div className="font-bold lg:mr-10 ">
               Like this question ?Add a like to improve its ranking
             </div>
-            <motion.button
-              className="bg-black rounded-full w-10 h-10 text-lg mr-5"
-              onClick={() => handleLikeButton("l")}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <motion.div
+              className="splash-container"
+              animate={{ scale: liked ? 1 : 1, opacity: liked ? 0.5 : 1 }}
+              transition={{ duration: 0.3 }}
             >
-              👍
-            </motion.button>
-            <motion.button
+              <motion.button
+                className="bg-black rounded-full w-10 h-10 text-lg mr-5"
+                onClick={() => handleLikeButton("l")}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {!liked ? "👍" : "👎"}
+              </motion.button>
+            </motion.div>
+            {/* <motion.button
               className="bg-black rounded-full w-10 h-10 text-lg"
               onClick={() => handleLikeButton("d")}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
               👎
-            </motion.button>
+            </motion.button> */}
           </div>
 
           <div className="grid max-w-[826px] gap-2 mx-auto px-3 lg:ml-20 mt-4">
@@ -153,8 +163,8 @@ const PostPage = () => {
               onChange={(e) => setText(e.target.value)}
             />
             <Button
-            onClick={() => handlePostButton()} 
-            className="bg-[#14591d]">Post</Button>
+              onClick={() => handlePostButton()}
+              className="bg-[#14591d]">Post</Button>
           </div>
 
           {/* <div className="bg-klight w-full overflow-hidden flex flex-col text-white p-4 rounded-lg shadow-lg mb-4 mt-10">
