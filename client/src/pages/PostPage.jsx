@@ -72,6 +72,7 @@ const PostPage = () => {
           parentElement: postID,
         }
       );
+      setText(""); 
 
       const updatedSubQuestions = [...subQuestions, response.data.element];
 
