@@ -51,9 +51,9 @@ const Dashboard = () => {
     <div className="bg-[#0a210f]">
       <Navbar text={"कृषिseva"} />
       <div className="flex gap-[70px] w-full mx-auto items-center h-screen max-w-[90%]">
-        <DashCard title= {"Crop Insights"} content = {" Explore the optimal crops for your region with our Crop Insights feature. Simply input your location to discover suitable crops, along with detailed information on their benefits, growth patterns, and additional cultivation regions. Make informed planting decisions effortlessly. "} />
-        <DashCard title= {"Leaf Care Diagnostics"} content = {"Empower your crop management with LeafCare Diagnostics. Upload images of your plant leaves, and our advanced system will swiftly detect any diseases present. Receive accurate diagnoses, detailed disease descriptions, and recommended preventive measures to safeguard your crops. "} />
-        <DashCard title= {"Farmers Forum"} content = {"Join our Farmers Forum to connect, learn, and thrive alongside fellow agriculturists. Share insights, ask questions, and exchange valuable experiences in a supportive community environment. Enhance your farming journey with shared knowledge and expertise."} />
+        <DashCard title= {"Crop Insights"} content = {" Explore the optimal crops for your region with our Crop Insights feature. Simply input your location to discover suitable crops, along with detailed information on their benefits, growth patterns, and additional cultivation regions. Make informed planting decisions effortlessly. " } route={"/crop"} />
+        <DashCard title= {"Leaf Care Diagnostics"} content = {"Empower your crop management with LeafCare Diagnostics. Upload images of your plant leaves, and our advanced system will swiftly detect any diseases present. Receive accurate diagnoses, detailed disease descriptions, and recommended preventive measures to safeguard your crops. "} route={"/leaf"} />
+        <DashCard title= {"Farmers Forum"} content = {"Join our Farmers Forum to connect, learn, and thrive alongside fellow agriculturists. Share insights, ask questions, and exchange valuable experiences in a supportive community environment. Enhance your farming journey with shared knowledge and expertise."} route={"/community"} />
         
       </div>
     </div>

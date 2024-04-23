@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-const DashCard = ({title,content}) => {
+const DashCard = ({title,content,route}) => {
+  const navigate = useNavigate();
  return (
     <motion.div
       className="bg-[#e1e289] text-[#0a210f] p-6 rounded-lg shadow-lg h-[500px] flex flex-col justify-between -mt-28"
@@ -18,11 +20,17 @@ const DashCard = ({title,content}) => {
       className="text-lg mb-6">
         {content}
       </motion.p>
-      <button className="bg-[#0a210f] text-[#e1e289] px-4 py-2 rounded-lg hover:bg-[#0a210f6a] transition-colors duration-200">
+      <button onClick={()=>{
+        navigate(route)
+      }} className="bg-[#0a210f] text-[#e1e289] px-4 py-2 rounded-lg hover:bg-[#0a210f6a] transition-colors duration-200">
         Try Out
       </button>
     </motion.div>
  );
 };
+
+// //<button onClick={() => navigate(route)} className="bg-[#0a210f] text-[#e1e289] px-4 py-2 rounded-lg hover:bg-[#0a210f6a] transition-colors duration-200">
+// Try Out
+// </button>
 
 export default DashCard;
