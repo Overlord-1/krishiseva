@@ -18,7 +18,60 @@ const recognizeDisease = async (req, res) => {
     // await fs.unlink(existingImage.image);
     console.log("uploaded image");
     const response = await axios.get("http://127.0.0.1:5000/recognize");
-    res.send(response.data);
+    console.log(response.data.predicted_disease);
+    const diagnostic = response.data.predicted_disease;
+    const isHealthy = diagnostic.indexOf("healthy") !== -1;
+    console.log(isHealthy);
+
+    const [crop, disease] = diagnostic.split("___");
+    let arr;
+    if (isHealthy) {
+      //How do we prevent any disease affecting the crop
+      const ans1 = await model
+        .generateContent(
+          `My crop ${crop} is healthy right now. What can I do to keep it that way and maximize its yield at harvest?, answer in around 40 words. start with to maintain healthy conditions:`
+        )
+        .then((content) => content.response.text());
+      console.log(ans1);
+
+      //Are there any factors affecting the nutritional value, such as soil composition or environmental pollution?
+      const ans2 = await model
+        .generateContent(
+          `im a farmer growing ${crop}.Are there any factors affecting the nutritional value, such as soil composition or environmental pollution?answer in around 40 words. start with factors to keep in mind..:`
+        )
+        .then((content) => content.response.text());
+      console.log(ans2);
+      //What efforts are being made to minimize environmental impact and promote sustainability?
+      const ans3 = await model
+        .generateContent(
+          `im a farmer and i grow ${crop}. What efforts are being made to minimize environmental impact and promote sustainability? answer in arounf 50 words`
+        )
+        .then((content) => content.response.text());
+      arr = [crop, isHealthy, ans1, ans2, ans3];
+    } else {
+      //WHAT IS THIS DISEASE
+      const ans1 = await model
+        .generateContent(
+          `im a farmer, im growing ${crop} and it is having the disease ${disease}. what is it.i donot want solutions. answer in around 50 words`
+        )
+        .then((content) => content.response.text());
+      ///NOTE how TO MINIMIZE THE DISEASE
+      const ans2 = await model
+        .generateContent(
+          `im a farmer, im growing ${crop} and it is having the disease ${disease}. what to cure/minimize the damage. answer in around 50 words`
+        )
+        .then((content) => content.response.text());
+      //how to avoid the disease in future
+      const ans3 = await model
+        .generateContent(
+          `im a farmer, im growing ${crop} and it is having the disease ${disease}. what can i do in the future to avoid it?. answer in around 50 words`
+        )
+        .then((content) => content.response.text());
+      console.log(ans1, "ans22\n", ans2, "ans3", ans3);
+      arr = [crop, isHealthy, ans1, ans2, ans3];
+    }
+
+    res.send(arr);
   } catch (error) {
     // Handle errors
     console.error("Error uploading image:", error);
