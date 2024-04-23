@@ -78,7 +78,7 @@ const Leaf = () => {
           {
             error && <div className="text-red-500 mt-3">Please select an image to upload </div>
           }
-          {success && <div className="text-green-500 mt-3">{results.indexOf("healthy")!==-1?"Congratulations your leaf is healthy":"sorry" }</div>}
+          {success && <div className="text-green-500 mt-3">{results.indexOf("healthy")!==-1?"Congratulations your leaf is healthy":"sorry leaf has disease" }</div>}
         </div>
         <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col items-center">
           <div className="text-2xl font-bold text-left">Results</div>
