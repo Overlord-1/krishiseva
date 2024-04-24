@@ -3,20 +3,21 @@ import React, { useState } from "react";
 import plusicon from "/plus.png";
 import QAComp from "@/components/QAComp";
 import axios from "axios";
-import { set } from "date-fns";
 
 const Leaf = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
-    // console.log('submit')
+    setLoading(true)
     e.preventDefault()
     console.log('submit')
     if (!selectedFile) {
       console.error('No file selected');
       setError(true);
+      setLoading(false);
       setTimeout(() => {
         setError(false);
       }, 2000);
@@ -30,8 +31,9 @@ const Leaf = () => {
       const response = await axios.post(`http://localhost:4000/api/ai/recognize`, formData);
       console.log('Image uploaded successfully:', response.data);
       setSuccess(true);
-      console.log(response.data.predicted_disease);
-      setResults(response.data.predicted_disease);
+      console.log(response.data);
+      setResults(response.data);
+      setLoading(false);
     }
     catch (error) {
       console.log('Error uploading image:');
@@ -42,9 +44,10 @@ const Leaf = () => {
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   }
+  // console.log("Res", results)
 
   return (
-    <div className="bg-[#0a210f] h-screen">
+    <div className="bg-[#0a210f] min-h-screen">
       <Navbar text={"Leaf Disease Detector"} />
       <div className="main-content w-full lg:overflow-hidden flex flex-col md:flex-row">
         <div className="leftside w-full lg:max-h-screen lg:w-1/2 relative flex flex-col items-center">
@@ -78,16 +81,50 @@ const Leaf = () => {
           {
             error && <div className="text-red-500 mt-3">Please select an image to upload </div>
           }
-          {success && <div className="text-green-500 mt-3">{results.indexOf("healthy")!==-1?"Congratulations your leaf is healthy":"sorry leaf has disease" }</div>}
+
+          {success && <div className="text-green-500 mt-3">{results?.crop}</div>}
         </div>
         <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col items-center">
           <div className="text-2xl font-bold text-left">Results</div>
-          <div className="results ml-5 bg-transparent md:w-[500px] mt-10 flex flex-col gap-5">
+          <div className="results ml-5 bg-transparent lg:w-[800px] mt-10 flex flex-col gap-5">
+            {
+              results.length !== 0 ?
+                <div className="flex flex-col gap-5">
 
+                  <QAComp text={results.ans1} rank={0} disease={results.isHealthy} />
+                  <QAComp text={results.ans2} rank={1} disease={results.isHealthy} />
+                  <QAComp text={results.ans3} rank={2} disease={results.isHealthy} />
+                </div>
+                :
+                <div className="text-center text-klight">Please upload image to get the results</div>
+            }
+            {
+              loading &&
+              <div>
+                <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Converting your image:</h2>
+                <ul class="max-w-md space-y-2 text-gray-500 list-inside dark:text-gray-400">
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 me-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                    </svg>
+                    Upload your file to our website
+                  </li>
+
+                  <li class="flex items-center">
+                    <div role="status">
+                      <svg aria-hidden="true" class="w-4 h-4 me-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" /><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" /></svg>
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    Preparing your file
+                  </li>
+                </ul>
+              </div>
+
+            }
+
+            {/* <QAComp />
             <QAComp />
-            <QAComp />
-            <QAComp />
-            <QAComp />
+            <QAComp /> */}
           </div>
         </div>
       </div>
@@ -96,3 +133,6 @@ const Leaf = () => {
 };
 
 export default Leaf;
+
+
+

@@ -47,7 +47,9 @@ const recognizeDisease = async (req, res) => {
           `im a farmer and i grow ${crop}. What efforts are being made to minimize environmental impact and promote sustainability? answer in arounf 50 words`
         )
         .then((content) => content.response.text());
-      arr = [crop, isHealthy, ans1, ans2, ans3];
+      // arr = [crop, isHealthy, ans1, ans2, ans3];
+      arr = {crop: crop, isHealthy:isHealthy, ans1:ans1, ans2:ans2, ans3:ans3};
+
     } else {
       //WHAT IS THIS DISEASE
       const ans1 = await model
@@ -68,7 +70,7 @@ const recognizeDisease = async (req, res) => {
         )
         .then((content) => content.response.text());
       console.log(ans1, "ans22\n", ans2, "ans3", ans3);
-      arr = [crop, isHealthy, ans1, ans2, ans3];
+      arr = {crop: crop, isHealthy:isHealthy, ans1:ans1, ans2:ans2, ans3:ans3};
     }
 
     res.send(arr);
