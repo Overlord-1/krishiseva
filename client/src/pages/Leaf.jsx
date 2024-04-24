@@ -1,8 +1,9 @@
 import Navbar from "@/components/Navbar/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import plusicon from "/plus.png";
 import QAComp from "@/components/QAComp";
 import axios from "axios";
+import { ReactTyped } from "react-typed";
 
 const Leaf = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -10,6 +11,24 @@ const Leaf = () => {
   const [success, setSuccess] = useState(false);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [renderIndex, setRenderIndex] = useState(0);
+
+  useEffect(() => {
+    if (results.length !== 0) {
+      // Set up a sequence of timeouts to render each QAComp one after the other
+      const timeouts = [
+        setTimeout(() => setRenderIndex(1), 1000), // Render QAComp 1 after 1 second
+        setTimeout(() => setRenderIndex(2), 2000), // Render QAComp 2 after 2 seconds
+        setTimeout(() => setRenderIndex(3), 3000), // Render QAComp 3 after 3 seconds
+      ];
+
+      // Cleanup function to clear all timeouts if the component unmounts
+      return () => timeouts.forEach(clearTimeout);
+    }
+  }, [results]);
+
+
   const handleSubmit = async (e) => {
     setLoading(true)
     e.preventDefault()
@@ -44,7 +63,6 @@ const Leaf = () => {
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   }
-  // console.log("Res", results)
 
   return (
     <div className="bg-[#0a210f] min-h-screen">
@@ -72,7 +90,6 @@ const Leaf = () => {
               <img src={plusicon} width="110vw" alt="Plus Icon" />
             )}
           </div>
-          {/* <p>IMgae uplaided press button </p> */}
           <button
             onClick={(e) => handleSubmit(e)}
             className="bg-klight mt-5 p-5 rounded-lg text-kdark font-bold ">
@@ -82,26 +99,35 @@ const Leaf = () => {
             error && <div className="text-red-500 mt-3">Please select an image to upload </div>
           }
 
-          {success && <div className="text-green-500 mt-3">{results?.crop}</div>}
+          {success && <div className="mt-10 text-kdark font-bold">
+            <ReactTyped className="bg-klight p-5 mt-10 rounded-full" strings={[results.isHealthy ? `Congratulations your ${results?.crop} crop is very healthy ` : "Oops your crop has some disease check out the results."]} typeSpeed={10} />
+            {/* {results?.crop} */}
+          </div>}
         </div>
         <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col items-center">
           <div className="text-2xl font-bold text-left">Results</div>
           <div className="results ml-5 bg-transparent lg:w-[800px] mt-10 flex flex-col gap-5">
-            {
-              results.length !== 0 ?
-                <div className="flex flex-col gap-5">
-
+            {results.length !== 0 ? (
+              <div className="flex flex-col gap-5">
+                {renderIndex >= 1 && (
                   <QAComp text={results.ans1} rank={0} disease={results.isHealthy} />
+                )}
+                {renderIndex >= 2 && (
                   <QAComp text={results.ans2} rank={1} disease={results.isHealthy} />
+                )}
+                {renderIndex >= 3 && (
                   <QAComp text={results.ans3} rank={2} disease={results.isHealthy} />
-                </div>
-                :
-                <div className="text-center text-klight">Please upload image to get the results</div>
-            }
+                )}
+              </div>
+            ) : (
+              <div className="text-center text-klight">
+                Please upload image to get the results
+              </div>
+            )}
             {
               loading &&
               <div>
-                <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Converting your image:</h2>
+                <h2 class="mb-2 text-lg font-semibold text-klight dark:text-white">Converting your image:</h2>
                 <ul class="max-w-md space-y-2 text-gray-500 list-inside dark:text-gray-400">
                   <li class="flex items-center">
                     <svg class="w-4 h-4 me-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -121,10 +147,6 @@ const Leaf = () => {
               </div>
 
             }
-
-            {/* <QAComp />
-            <QAComp />
-            <QAComp /> */}
           </div>
         </div>
       </div>

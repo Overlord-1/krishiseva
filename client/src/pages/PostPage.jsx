@@ -1,19 +1,9 @@
-import LeftBar from "@/components/LeftBar";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion";
-import chat from "../assets/chat.svg";
+// import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
 import Heart from "react-animated-heart";
 
 const PostPage = () => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { ReactTyped } from 'react-typed';
 
 const QAComp = ({ text,rank,disease }) => {
     let result  = text?.replace(/\*/g,'');
@@ -15,9 +16,10 @@ const QAComp = ({ text,rank,disease }) => {
     return (
  
         <div className="lg:w-[1000px] border-2 border-klight rounded-lg p-4 text-klight  max-w-[90%]">
-            <div className="font-bold mb-2">{list[rank]}</div>
+            <div className="font-bold text-2xl mb-2">{list[rank]}</div>
             {/* <div className='font-bold'>{result.split(" ")[0]}</div> */}
-            <div>{result}</div>
+            {/* <div>{result}</div> */}
+            <ReactTyped strings={[result]} typeSpeed={10}/>
         </div>
     )
 }
