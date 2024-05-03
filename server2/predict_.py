@@ -14,7 +14,6 @@ with open('scaler.pkl', 'rb') as file:
 
 app = Flask(__name__)
 
-# i am chahat
 # Load the saved model
 import tensorflow as tf
 loaded_model = tf.keras.models.load_model("my_model.keras")
