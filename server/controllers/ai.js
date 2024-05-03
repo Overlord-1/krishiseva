@@ -97,7 +97,7 @@ const model = require("../services/gemini.js");
 const test1 = async (req, res) => {
   try {
     const result =
-      await model.generateContent(`Considering a region in ${req.params.region},india; provide the most probable soil conditions in JSON format, including: nitrates, phosphates, potassium, temperature (assuming summer), humidity (assuming monsoon season), pH (acknowledging limitations and typical range for ${req.params.region}'s soil , and rainfall (recognizing it might be a drier than usual year). 
+      await model.generateContent(`Considering a region in ${req.params.region},india; provide the most probable soil conditions in JSON format, including: nitrates, phosphates, potassium, temperature (assuming summer), humidity (assuming monsoon season), pH (acknowledging limitations and typical range for ${req.params.region}'s soil , and rainfall in cm(rainfall field must be of yearly rainfall and must be the most accurate) . 
       donot return anything else.i want numbers only, even they maynot be completely verifed, donot include any comments or other information.your answer should start with{ and end with}. put your result in "", donot use ''or any other symbol., DONOT GIVE N/A`);
     const ans = JSON.parse(result.response.text());
 
