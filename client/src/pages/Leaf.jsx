@@ -16,14 +16,13 @@ const Leaf = () => {
 
   useEffect(() => {
     if (results.length !== 0) {
-      // Set up a sequence of timeouts to render each QAComp one after the other
+      
       const timeouts = [
-        setTimeout(() => setRenderIndex(1), 1000), // Render QAComp 1 after 1 second
-        setTimeout(() => setRenderIndex(2), 2000), // Render QAComp 2 after 2 seconds
-        setTimeout(() => setRenderIndex(3), 3000), // Render QAComp 3 after 3 seconds
+        setTimeout(() => setRenderIndex(1), 1500), // Render QAComp 1 after 1 second
+        setTimeout(() => setRenderIndex(2), 7000), // Render QAComp 2 after 2 seconds
+        setTimeout(() => setRenderIndex(3), 10000), // Render QAComp 3 after 3 seconds
       ];
 
-      // Cleanup function to clear all timeouts if the component unmounts
       return () => timeouts.forEach(clearTimeout);
     }
   }, [results]);

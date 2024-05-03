@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import './Splash.css'; // Ensure this CSS file exists
+import './Splash.css'; 
 
 const Splash = ({ onComplete, startPosition }) => {
  useEffect(() => {
     const timer = setTimeout(() => {
       onComplete();
-    }, 2000); // Adjust the duration as needed
+    }, 2000);
 
     return () => clearTimeout(timer);
  }, [onComplete]);
