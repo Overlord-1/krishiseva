@@ -15,7 +15,7 @@ app.use(express.json());
 // Routes
 const login = require("./routes/login");
 const messages = require("./routes/getMessages");
-const forum = require'("./routes/forum");
+const forum = require("./routes/forum");
 const gemini = require("./routes/gemini");
 const ai = require("./routes/ai");
 app.use("/api/login", login);
