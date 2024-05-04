@@ -28,7 +28,7 @@ const Crop = (props) => {
   };
 
   return (
-    <div className='min-h-screen bg-kdark h-screen w-full'>
+    <div className='min-h-screen bg-kdark h-screen w-full overflow-hidden'>
       <Navbar text={"Crop Predictor"} />
 
       <div className='w-full flex'>
@@ -41,13 +41,13 @@ const Crop = (props) => {
             </div>
             <span className='text-klight'>Enter the N P K and Ph values of the location</span>
             <div className='flex flex-col max-w-[300px] gap-10'>
-              <input type="text" placeholder='Enter a place' className='bg-klight text-black mr-3 p-2 rounded-full' onChange={handleInputChange} />
-              <input type="text" placeholder='Enter a place' className='bg-klight text-black mr-3 p-2 rounded-full' onChange={handleInputChange} />
-              <input type="text" placeholder='Enter a place' className='bg-klight text-black mr-3 p-2 rounded-full' onChange={handleInputChange} />
-              <input type="text" placeholder='Enter a place' className='bg-klight text-black mr-3 p-2 rounded-full' onChange={handleInputChange} />
+              <input type="text" placeholder='Enter N value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
+              <input type="text" placeholder='Enter P value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
+              <input type="text" placeholder='Enter K value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
+              <input type="text" placeholder='Enter Ph value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
             </div>
 
-            <button onClick={handleSubmit} className='bg-klight hover:text-[#0a210f]  text-kdark font-bold py-2 px-4 rounded-lg ml-3'>Search</button>
+            <button onClick={handleSubmit} className='bg-klight hover:text-[#0a210f] max-w-[400px] text-kdark font-bold py-2 px-4 rounded-lg ml-3'>Search</button>
             <div>
 
             </div>
@@ -68,13 +68,13 @@ const Crop = (props) => {
 
         <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col items-center">
           <div className="text-2xl font-bold text-left">Results</div>
-          <div> {/* Add this div wrapper */}
+          <div> 
             {
               loading ? <SkeletonTheme baseColor="#0a210f" highlightColor="#e1e28945">
                 <p>
-                  <Skeleton className='md:w-[500px] h-[300px] mt-10' />
+                  <Skeleton className='md:max-w-[900px] h-[300px] mt-10' />
                 </p>
-                <Skeleton className=' h-3 mt-10' />
+                <Skeleton className=' max-w-[900px] h-3 mt-10' />
               </SkeletonTheme> : null
             }
             {
