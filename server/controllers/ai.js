@@ -167,7 +167,7 @@ const test1 = async (req, res) => {
         res.data.data.reduce((arr, curr) => arr + curr.prcp, 0) / 12,
       ];
     });
-    console.log("t%r", temperature, rainfall);
+    // console.log("t%r", temperature, rainfall);
 
     // console.log(respo.data.data[0].prcp);
     // console.log(respo.data.data[0]);
@@ -234,7 +234,17 @@ const test1 = async (req, res) => {
         },
       }
     );
-    res.send(response.data);
+    const ans1 = await model
+      .generateContent(
+        `im growing a ${response.data} in ${req.params.region} in india. Are there any specific pest or disease management strategies for this crop. give me an answer in  40 words. start directly with use.. `
+      )
+      .then((content) => content.response.text());
+    const ans2 = await model
+      .generateContent(
+        `im growing a ${response.data}in ${req.params.region} in india. What are some other crops that i can grow. start your answer with you can also... . also mention about Krishi Vigyan Kendra.Aanswer in 40 words`
+      )
+      .then((content) => content.response.text());
+    res.send([response.data, ans1, ans2]);
   } catch (error) {
     console.log(error);
     // console.error("Error predicting:", error);
