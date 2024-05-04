@@ -120,7 +120,7 @@ const test1 = async (req, res) => {
     //   await model.generateContent(`Considering a region in india with latitude:${lat} and longitude:${lon}; provide the  soil conditions in JSON format, including: nitrates, phosphates, potassium, temperature (assuming summer), humidity (assuming monsoon season), pH (acknowledging limitations and typical range for ${req.params.region}'s soil , and rainfall in cm(rainfall field must be of yearly rainfall and must be the most accurate) .
     // donot return anything else.i want numbers only, even they maynot be completely verifed, donot include any comments or other information.your answer should start with{ and end with}. put your result in "", donot use ''or any other symbol., DONOT GIVE N/Aor null or any other value.`);
     const ans = JSON.parse(result.response.text());
-    console.log(ans);
+    console.log("ans->", ans);
 
     // const options = {
     //   method: "GET",
@@ -162,6 +162,8 @@ const test1 = async (req, res) => {
     // convertedData.rainfall = `${rainfall / 12}`;
     // console.log(convertedData);
     //NOTE
+    console.log(Number(convertedData.rainfall));
+    convertedData.rainfall = `${Number(convertedData.rainfall) / 12}`;
 
     const response = await axios.post(
       "http://127.0.0.1:5000/predict",
