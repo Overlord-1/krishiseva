@@ -4,6 +4,7 @@ import axios from 'axios'; // Ensure axios is imported
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
 import QAComp from '@/components/QAComp';
+import { Link } from 'react-router-dom';
 
 const Crop = (props) => {
   const [inputValue, setInputValue] = useState();
@@ -118,6 +119,10 @@ const Crop = (props) => {
           </div> {/* Add this div wrapper */}
         </div>
       </div>
+
+      <span className='text-center ml-9 '> *Not sure about these values click
+        <Link className='mx-2 text-klight' to="https://matihaat.com/product/soil-test-npk-ph-ec/?srsltid=AfmBOoqlFinxBcKBWP04j03T8io4Po8WlVK1WWI7hclBU9c1y9AO8i9TKZQ" target="_blank" rel="noopener noreferrer">here</Link>
+        to know more</span>
     </div>
   );
 };

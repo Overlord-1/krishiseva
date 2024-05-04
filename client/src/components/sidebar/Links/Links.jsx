@@ -39,7 +39,7 @@ const Links = () => {
             }
           }}
         >
-          Crop Insights
+          Crop Predictor
         </motion.a>
       </Link>
       <Link to={"/leaf"}>
