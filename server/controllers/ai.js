@@ -105,7 +105,7 @@ const predict = async (req, res) => {
 };
 const model = require("../services/gemini.js");
 
-const test1 = async (req, res) => {
+const predictCrop = async (req, res) => {
   try {
     console.log(req.params);
     const latLng = await axios.get(
@@ -234,16 +234,25 @@ const test1 = async (req, res) => {
         },
       }
     );
+    // const ans1 = await model
+    //   .generateContent(
+    //     `im growing a ${response.data} in ${req.params.region} in india. Are there any specific pest or disease management strategies for this crop. give me an answer in  40 words. start directly with use.. `
+    //   )
+    // .then((content) => content.response.text());
+    const predictedCrop = response.data.predicted_crop[0];
+    console.log(predictedCrop);
+
     const ans1 = await model
       .generateContent(
-        `im growing a ${response.data} in ${req.params.region} in india. Are there any specific pest or disease management strategies for this crop. give me an answer in  40 words. start directly with use.. `
+        `im growing a crop- ${predictedCrop} in ${req.params.region} in india.give me justification why is ${predictedCrop} suitable for my region. give me an answer in  40 words. start directly with as.. `
       )
       .then((content) => content.response.text());
     const ans2 = await model
       .generateContent(
-        `im growing a ${response.data}in ${req.params.region} in india. What are some other crops that i can grow. start your answer with you can also... . also mention about Krishi Vigyan Kendra.Aanswer in 40 words`
+        `im growing a ${predictedCrop}in ${req.params.region} in india. What are some other crops that i can grow. start your answer with you can also... . also mention about Krishi Vigyan Kendra.Aanswer in 40 words`
       )
       .then((content) => content.response.text());
+    console.log(predictedCrop, ans1, ans2);
     res.send([response.data, ans1, ans2]);
   } catch (error) {
     console.log(error);
@@ -252,4 +261,4 @@ const test1 = async (req, res) => {
   }
 };
 
-module.exports = { recognizeDisease, upload, predict, test1 };
+module.exports = { recognizeDisease, upload, predict, predictCrop };

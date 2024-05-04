@@ -4,11 +4,11 @@ const {
   upload,
   recognizeDisease,
   predict,
-  test1,
+  predictCrop,
 } = require("../controllers/ai");
 router.route("/paramenters").post();
 router.route("/recognize").post(upload.single("ai"), recognizeDisease);
-router.route("/predict/:N/:P/:K/:ph/:region").get(test1);
+router.route("/predict/:N/:P/:K/:ph/:region").get(predictCrop);
 module.exports = router;
 // Path: server/routes/forum.js
 
