@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4000/api/", formData);
+      const response = await axios.post("http://localhost:4000/api/login", formData);
       console.log(response.data); // You can handle the response as needed
     } catch (error) {
       console.error("Error registering user:", error.response?.data.message);
@@ -36,7 +36,7 @@ const Register = () => {
           src={LightLogo}
           alt="krishiseva logo light mode"
           width={299}
-          className="mx-auto" // Center the logo
+          className="mx-auto" 
         />
       </div>
       <div className="rightSide flex flex-col">
