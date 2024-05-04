@@ -7,13 +7,15 @@ import QAComp from '@/components/QAComp';
 
 const Crop = (props) => {
   const [inputValue, setInputValue] = useState();
-  const [pvalue, setPvalue ]= useState();
-  const [nvalue, setNvalue ]= useState();
-  const [kvalue, setKvalue ]= useState();
-  const [phvalue, setPhvalue ]= useState();
+  const [pvalue, setPvalue] = useState();
+  const [nvalue, setNvalue] = useState();
+  const [kvalue, setKvalue] = useState();
+  const [phvalue, setPhvalue] = useState();
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
-  const[ predictedOutput, setPredictedOutput ]= useState(); 
+  const [predictedOutput, setPredictedOutput] = useState();
+  const [ans1, setAns1] = useState();
+  const [ans2, setAns2] = useState();
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -21,8 +23,10 @@ const Crop = (props) => {
     e.preventDefault();
     try {
       const response = await axios.get(`http://localhost:4000/api/ai/predict/${nvalue}/${pvalue}/${kvalue}/${phvalue}/${inputValue}`);
-      console.log(response.data.predicted_crop[0]);
-      setPredictedOutput(response.data.predicted_crop[0]);
+      console.log(response.data[0].predicted_crop[0]);
+      setPredictedOutput(response.data[0].predicted_crop[0]);
+      setAns1(response.data[1]);
+      setAns2(response.data[2]);
       setLoading(false);
     } catch (error) {
       // setLoading(false);
@@ -48,7 +52,7 @@ const Crop = (props) => {
             </div>
             <span className='text-klight'>Enter the N P K and Ph values of the location</span>
             <div className='flex flex-col max-w-[300px] gap-10'>
-              <input type="text" placeholder='Enter N value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setNvalue(e.target.value) }/>
+              <input type="text" placeholder='Enter N value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setNvalue(e.target.value)} />
               <input type="text" placeholder='Enter P value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setPvalue(e.target.value)} />
               <input type="text" placeholder='Enter K value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setKvalue(e.target.value)} />
               <input type="text" placeholder='Enter Ph value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setPhvalue(e.target.value)} />
@@ -70,34 +74,44 @@ const Crop = (props) => {
 
 
 
-          
+
         </div>
 
         <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col justify-center items-center">
           <div className="text-2xl font-bold text-left">Results</div>
-          <div className='flex flex-col items-center mt-5'> 
+          <div className='flex flex-col items-center mt-5'>
             {
-              loading ? 
-              <div>
-                <SkeletonTheme baseColor="#0a210f" highlightColor="#e1e28945">
-                  <Skeleton width={900} height={300}/>
-                </SkeletonTheme>
-              </div> 
-              : 
-              started
-              ?
-                <img className=' rounded-lg' src={`../crop_pics/${predictedOutput}.jpeg`} />
-              :
-                null
+              loading ?
+                <div>
+                  <SkeletonTheme baseColor="#0a210f" highlightColor="#e1e28945">
+                    <Skeleton width={900} height={300} />
+                  </SkeletonTheme>
+                </div>
+                :
+                started
+                  ?
+                  <div className='flex gap-10 items-center mb-10'>
+                    <img className=' rounded-lg' src={`../crop_pics/${predictedOutput}.jpeg`} />
+                    <span className='text-3xl text-center font-bold text-klight'>Best suited crop is {predictedOutput}</span>
+                  </div>
+                  :
+                  null
             }
             {
               loading
                 ?
-                <QAComp text={"fkdjfkdjkf"} rank={1} disease={true} loading={true} />
+                <>
+                  <QAComp text={"fkdjfkdjkf"} rank={1} disease={true} loading={true} />
+                  <QAComp text={"fkdjfkdjkf"} rank={1} disease={true} loading={true} />
+                </>
                 :
                 started
                   ?
-                  <QAComp text={"fkdjfkdjkf"} rank={1} disease={true} loading={false} />
+                  <>
+
+                    <QAComp text={ans1} rank={0} disease={"crop"} loading={false} />
+                    <QAComp text={ans2} rank={1} disease={"crop"} loading={false} />
+                  </>
                   :
                   null
             }
