@@ -124,22 +124,40 @@ const Login = () => {
             {registerError && ( <div className="text-red-500 text-lg font-semibold">{message}</div>)}
           </form>
           <div className="mt-14 mx-auto">         
-         <div href="/" className="ml-2 text-[#e1e289] opacity-70">
-              <Link to="/"> Not our part yet ? Join Now</Link>
-          </div>
-          {showSplash && (
-        <Splash
-          onComplete={() => setShowSplash(false)}
-          startPosition={splashStartPosition}
-        />
-      )}
+  <div className="ml-2 text-[#e1e289] opacity-70">
+    <Link to="/" 
+      style={{
+        color: '#e1e289', // Light grey
+        textDecoration: 'none', // Remove underline
+        fontWeight: 'bold', // Make text bold
+        cursor: 'pointer', // Change cursor to pointer on hover
+        padding: '0 30px', // Add padding for inline display
+      }}
+    >
+      Not our part yet? &nbsp;
+      <span 
+        style={{
+          color: '#99aa38', // Darker green
+          fontWeight: 'normal', // Reset font weight for this part
+          textDecoration: 'underline', // Add underline
+          marginRight: '0 50px 0 0', // Add space to the right of the span
+        }}
+      >
+        Join now
+      </span>
+    </Link>
+  </div>
+  {showSplash && (
+    <Splash
+      onComplete={() => setShowSplash(false)}
+      startPosition={splashStartPosition}
+    />
+  )}
+</div>
         </div>
       </div>
-    </div>
+    
   );
 };
 
 export default Login;
-
-
-

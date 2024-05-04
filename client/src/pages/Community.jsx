@@ -18,20 +18,20 @@ const Community = () => {
     getQuestions();
   }, []);
   return (
-    <div>
-      <Navbar text={"Welcome to the Community"} />
-      <div className="lg:w-[500px] border-2 border-klight rounded-lg p-4 mx-auto text-klight">
-        {questions.map((question) => (
-          <div key={question._id} className="mb-4">
-            <Link to={`/posts/${question._id}`} className="text-blue-500 hover:text-blue-700">
-              <h3 className="font-bold">{question.string}</h3>
-            </Link>
-            <p className="text-gray-500">{question.description}</p>
-          </div>
-        ))}
+    <div className="bg-[#0a210f] h-screen">
+  <Navbar text={"Welcome to the Community"} />
+
+  <div className="lg:w-[500px] border-2 border-klight rounded-lg p-4 mx-auto text-klight">
+    {questions.map((question) => (
+      <div key={question._id} className="mb-4">
+        <Link to={`/posts/${question._id}`} className="text-blue-500 hover:text-blue-700">
+          <h3 className="font-bold text-white">{question.string}</h3>
+        </Link>
+        <p className="text-gray-300">{question.description}</p>
       </div>
-      
-    </div>
+    ))}
+  </div>
+</div>
   )
 }
 
