@@ -48,8 +48,13 @@ const recognizeDisease = async (req, res) => {
         )
         .then((content) => content.response.text());
       // arr = [crop, isHealthy, ans1, ans2, ans3];
-      arr = {crop: crop, isHealthy:isHealthy, ans1:ans1, ans2:ans2, ans3:ans3};
-
+      arr = {
+        crop: crop,
+        isHealthy: isHealthy,
+        ans1: ans1,
+        ans2: ans2,
+        ans3: ans3,
+      };
     } else {
       //WHAT IS THIS DISEASE
       const ans1 = await model
@@ -70,7 +75,13 @@ const recognizeDisease = async (req, res) => {
         )
         .then((content) => content.response.text());
       console.log(ans1, "ans22\n", ans2, "ans3", ans3);
-      arr = {crop: crop, isHealthy:isHealthy, ans1:ans1, ans2:ans2, ans3:ans3};
+      arr = {
+        crop: crop,
+        isHealthy: isHealthy,
+        ans1: ans1,
+        ans2: ans2,
+        ans3: ans3,
+      };
     }
 
     res.send(arr);
@@ -96,11 +107,47 @@ const model = require("../services/gemini.js");
 
 const test1 = async (req, res) => {
   try {
+    // const latLng = await axios.get(
+    //   `http://api.openweathermap.org/geo/1.0/direct?q=nagpur&appid=30597233454e23d736adf43c366381c1`
+    // );
+    // lat = latLng.data[0].lat;
+    // lon = latLng.data[0].lon;
+    // console.log(lat, lon);
     const result =
-      await model.generateContent(`Considering a region in ${req.params.region},india; provide the most probable soil conditions in JSON format, including: nitrates, phosphates, potassium, temperature (assuming summer), humidity (assuming monsoon season), pH (acknowledging limitations and typical range for ${req.params.region}'s soil , and rainfall in cm(rainfall field must be of yearly rainfall and must be the most accurate) . 
-      donot return anything else.i want numbers only, even they maynot be completely verifed, donot include any comments or other information.your answer should start with{ and end with}. put your result in "", donot use ''or any other symbol., DONOT GIVE N/A`);
+      await model.generateContent(`Considering a region in ${req.params.region},india; provide the most probable soil conditions in JSON format, including: nitrates, phosphates, potassium, temperature (assuming summer), humidity (assuming monsoon season), pH (acknowledging limitations and typical range for ${req.params.region}'s soil , and rainfall in cm(rainfall field must be of yearly rainfall and must be the most accurate) .
+      donot return anything else.i want numbers only, even they maynot be completely verifed, donot include any comments or other information.your answer should start with{ and end with}. put your result in "", donot use ''or any other symbol., DONOT GIVE N/A or null`);
+    // const result =
+    //   await model.generateContent(`Considering a region in india with latitude:${lat} and longitude:${lon}; provide the  soil conditions in JSON format, including: nitrates, phosphates, potassium, temperature (assuming summer), humidity (assuming monsoon season), pH (acknowledging limitations and typical range for ${req.params.region}'s soil , and rainfall in cm(rainfall field must be of yearly rainfall and must be the most accurate) .
+    // donot return anything else.i want numbers only, even they maynot be completely verifed, donot include any comments or other information.your answer should start with{ and end with}. put your result in "", donot use ''or any other symbol., DONOT GIVE N/Aor null or any other value.`);
     const ans = JSON.parse(result.response.text());
+    console.log(ans);
 
+    // const options = {
+    //   method: "GET",
+    //   url: "https://meteostat.p.rapidapi.com/point/normals",
+    //   params: {
+    //     lat: `${lat}`,
+    //     lon: `${lon}`,
+    //     alt: "26",
+    //     start: "1961",
+    //     end: "1990",
+    //   },
+    //   headers: {
+    //     "X-RapidAPI-Key": "f92b611511msh60acd07c524ea52p112782jsn34f206cfbaf1",
+    //     "X-RapidAPI-Host": "meteostat.p.rapidapi.com",
+    //   },
+    // };
+
+    // const respo = await axios.request(options);
+    // let rainfall = 0;
+    // respo.data.data.forEach((element) => {
+    //   rainfall += element.prcp;
+    // });
+    // console.log(rainfall);
+    // const rainfall = await axios.get(
+    //   `http://api.openweathermap.org/data/2.5/weather?appid=${process.env.WETAHER_API}&q=nagpur`
+    // );
+    // console.log(rainfall);
     //NOTE
 
     const convertedData = Object.entries(ans).reduce((acc, [key, value]) => {
@@ -112,9 +159,8 @@ const test1 = async (req, res) => {
       acc[newKey] = stringValue;
       return acc;
     }, {});
-
-    console.log(convertedData);
-
+    // convertedData.rainfall = `${rainfall / 12}`;
+    // console.log(convertedData);
     //NOTE
 
     const response = await axios.post(
@@ -128,6 +174,7 @@ const test1 = async (req, res) => {
     );
     res.send(response.data);
   } catch (error) {
+    console.log(error);
     // console.error("Error predicting:", error);
     res.status(500).send("Internal Server Error");
   }
