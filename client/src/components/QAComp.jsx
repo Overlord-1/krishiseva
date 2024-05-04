@@ -44,7 +44,7 @@ const QAComp = ({ text, rank, disease, loading,question }) => {
                 :
                 <div>
                     <div className={`font-bold ${forCrop?"text-2xl":"text-2xl"} mb-2`}>{list[rank]}</div>
-                    <ReactTyped strings={[result]} typeSpeed={10} className={`${forCrop?"text-xl":null}`}/>
+                    <ReactTyped strings={[result]} typeSpeed={10} className={`${forCrop?"text-lg":null}`}/>
                 </div>
             }
         </div>

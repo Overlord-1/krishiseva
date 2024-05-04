@@ -77,9 +77,9 @@ const Crop = (props) => {
 
         </div>
 
-        <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col justify-center items-center">
+        <div className="right-side w-full lg:h-full flex flex-col justify-center items-center">
           <div className="text-2xl font-bold text-left">Results</div>
-          <div className='flex flex-col items-center mt-5'>
+          <div className='flex flex-col items-center mt-5  max-w-[90%]'>
             {
               loading ?
                 <div>
