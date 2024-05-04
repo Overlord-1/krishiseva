@@ -107,12 +107,16 @@ const model = require("../services/gemini.js");
 
 const test1 = async (req, res) => {
   try {
-    // const latLng = await axios.get(
-    //   `http://api.openweathermap.org/geo/1.0/direct?q=nagpur&appid=30597233454e23d736adf43c366381c1`
-    // );
-    // lat = latLng.data[0].lat;
-    // lon = latLng.data[0].lon;
-    // console.log(lat, lon);
+    console.log(req.params);
+    const latLng = await axios.get(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${req.params.region}&appid=30597233454e23d736adf43c366381c1`
+    );
+    lat = latLng.data[0].lat;
+    lon = latLng.data[0].lon;
+    console.log(lat, lon);
+
+    //NOTE uncommment this for gemini
+    /*
     const result =
       await model.generateContent(`Considering a region in ${req.params.region},india; provide the most probable soil conditions in JSON format, including: nitrates, phosphates, potassium, temperature (assuming summer), humidity (assuming monsoon season), pH (acknowledging limitations and typical range for ${req.params.region}'s soil , and rainfall in cm(rainfall field must be of yearly rainfall and must be the most accurate) .
       donot return anything else.i want numbers only, even they maynot be completely verifed, donot include any comments or other information.your answer should start with{ and end with}. put your result in "", donot use ''or any other symbol., DONOT GIVE N/A or null`);
@@ -121,35 +125,80 @@ const test1 = async (req, res) => {
     // donot return anything else.i want numbers only, even they maynot be completely verifed, donot include any comments or other information.your answer should start with{ and end with}. put your result in "", donot use ''or any other symbol., DONOT GIVE N/Aor null or any other value.`);
     const ans = JSON.parse(result.response.text());
     console.log("ans->", ans);
+     */
+    /* 
+    const options = {
+      method: "GET",
+      url: "https://meteostat.p.rapidapi.com/point/normals",
+      params: {
+        lat: `${lat}`,
+        lon: `${lon}`,
+        alt: "26",
+        start: "1961",
+        end: "1990",
+      },
+      headers: {
+        "X-RapidAPI-Key": "f92b611511msh60acd07c524ea52p112782jsn34f206cfbaf1",
+        "X-RapidAPI-Host": "meteostat.p.rapidapi.com",
+      },
+    };
 
-    // const options = {
-    //   method: "GET",
-    //   url: "https://meteostat.p.rapidapi.com/point/normals",
-    //   params: {
-    //     lat: `${lat}`,
-    //     lon: `${lon}`,
-    //     alt: "26",
-    //     start: "1961",
-    //     end: "1990",
-    //   },
-    //   headers: {
-    //     "X-RapidAPI-Key": "f92b611511msh60acd07c524ea52p112782jsn34f206cfbaf1",
-    //     "X-RapidAPI-Host": "meteostat.p.rapidapi.com",
-    //   },
-    // };
+    const respo = await axios.request(options); */
 
-    // const respo = await axios.request(options);
+    const options = {
+      method: "GET",
+      url: "https://meteostat.p.rapidapi.com/point/normals",
+      params: {
+        lat: `${lat}`,
+        lon: `${lon}`,
+        alt: "26",
+        start: "1961",
+        end: "1990",
+      },
+      headers: {
+        "X-RapidAPI-Key": "f92b611511msh60acd07c524ea52p112782jsn34f206cfbaf1",
+        "X-RapidAPI-Host": "meteostat.p.rapidapi.com",
+      },
+    };
+
+    const [temperature, rainfall] = await axios.request(options).then((res) => {
+      return [
+        res.data.data.reduce((acc, curr) => acc + curr.tavg, 0) / 12,
+        res.data.data.reduce((arr, curr) => arr + curr.prcp, 0) / 12,
+      ];
+    });
+    console.log("t%r", temperature, rainfall);
+
+    // console.log(respo.data.data[0].prcp);
+    // console.log(respo.data.data[0]);
     // let rainfall = 0;
     // respo.data.data.forEach((element) => {
     //   rainfall += element.prcp;
     // });
-    // console.log(rainfall);
-    // const rainfall = await axios.get(
-    //   `http://api.openweathermap.org/data/2.5/weather?appid=${process.env.WETAHER_API}&q=nagpur`
-    // );
-    // console.log(rainfall);
-    //NOTE
+    console.log(temperature);
+    const [temp, humidity] = await axios
+      .get(
+        `http://api.openweathermap.org/data/2.5/weather?appid=${process.env.WETAHER_API}&q=${req.params.region}`
+      )
+      .then((res) => {
+        return [
+          (res.data.main.temp_max + res.data.main.temp_min) / 2 - 273.15,
+          res.data.main.humidity,
+        ];
+      });
+    console.log(temp);
 
+    // const testall = await axios
+    //   .get(
+    //     `https://history.openweathermap.org/data/2.5/aggregated/year?lat=${lat}&lon=${lon}&appid=30597233454e23d736adf43c366381c1`
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
+    // console.log(testall.data);
+
+    //NOTE-uncomment for gemini till NEXT NOTE
+    /*
     const convertedData = Object.entries(ans).reduce((acc, [key, value]) => {
       // Convert all values to strings
       const stringValue = value.toString();
@@ -161,10 +210,21 @@ const test1 = async (req, res) => {
     }, {});
     // convertedData.rainfall = `${rainfall / 12}`;
     // console.log(convertedData);
-    //NOTE
-    console.log(Number(convertedData.rainfall));
-    convertedData.rainfall = `${Number(convertedData.rainfall) / 12}`;
 
+    console.log(Number(convertedData.rainfall));
+    NOTE 
+    */
+    const convertedData = {
+      nitrates: `${req.params.N}`,
+      phosphates: `${req.params.P}`,
+      potassium: `${req.params.K}`,
+      ph: `${req.params.ph}`,
+      temperature: `${temp}`,
+      rainfall: `${Number(rainfall)}`,
+      humidity: `${humidity}`,
+    };
+
+    console.log(convertedData);
     const response = await axios.post(
       "http://127.0.0.1:5000/predict",
       convertedData,

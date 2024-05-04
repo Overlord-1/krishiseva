@@ -8,7 +8,7 @@ const {
 } = require("../controllers/ai");
 router.route("/paramenters").post();
 router.route("/recognize").post(upload.single("ai"), recognizeDisease);
-router.route("/predict/:id").get(test1);
+router.route("/predict/:N/:P/:K/:ph/:region").get(test1);
 module.exports = router;
 // Path: server/routes/forum.js
 
