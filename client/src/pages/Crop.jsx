@@ -35,7 +35,7 @@ const Crop = (props) => {
 
       <div className='w-full flex'>
         <div className="leftside min-w-[50%] mt-10 pl-20">
-          <input type="text" placeholder='Enter a place' className='bg-klight text-kdark px-16 mr-3 p-2 rounded-full' onChange={handleInputChange} />
+          <input type="text" placeholder='Enter a place' className='bg-klight text-black px-16 mr-3 p-2 rounded-full' onChange={handleInputChange} />
           <button onClick={handleSubmit} className='bg-klight hover:text-[#0a210f]  text-kdark font-bold py-2 px-4 rounded-lg ml-3'>Search</button>
 
 
