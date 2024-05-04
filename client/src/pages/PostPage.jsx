@@ -108,7 +108,7 @@ const PostPage = () => {
             </Button>
           </div>
           {subQuestions.map((subQuestion, subIndex) => (
-            <div className="lg:w-[500px] max-w-[90%] border-2 border-klight border-opacity-50 rounded-lg p-4 mt-5 mx-auto text-klight">
+            <div className="w-[826px] border-2 border-klight border-opacity-50 rounded-lg p-4 mt-5 mx-auto text-klight">
               {/* <div className="font-bold mb-2">What is the capital of France?</div> */}
               <div>{subQuestion.string}</div>
               {/* <div className="mt-5 rounded-lg p-3 w-[20%] flex h-10 ">
