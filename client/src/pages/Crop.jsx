@@ -7,18 +7,25 @@ import QAComp from '@/components/QAComp';
 
 const Crop = (props) => {
   const [inputValue, setInputValue] = useState();
+  const [pvalue, setPvalue ]= useState();
+  const [nvalue, setNvalue ]= useState();
+  const [kvalue, setKvalue ]= useState();
+  const [phvalue, setPhvalue ]= useState();
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
+  const[ predictedOutput, setPredictedOutput ]= useState(); 
 
   const handleSubmit = async (e) => {
     setLoading(true);
     setStarted(true);
     e.preventDefault();
     try {
-      const response = await axios.get(`http://localhost:4000/api/ai/predict/${inputValue}`);
-      console.log(response.data);
+      const response = await axios.get(`http://localhost:4000/api/ai/predict/${nvalue}/${pvalue}/${kvalue}/${phvalue}/${inputValue}`);
+      console.log(response.data.predicted_crop[0]);
+      setPredictedOutput(response.data.predicted_crop[0]);
       setLoading(false);
     } catch (error) {
+      // setLoading(false);
       console.error('Error fetching data:', error);
     }
   };
@@ -37,14 +44,14 @@ const Crop = (props) => {
           <div className='flex flex-col gap-10'>
             <span className='text-klight'>Enter the name of the place your looking</span>
             <div>
-              <input type="text" placeholder='Enter a place' className='bg-klight text-black px-16 mr-3 p-2 rounded-full' onChange={handleInputChange} />
+              <input type="text" placeholder='Enter a place' className='bg-klight text-black px-16 mr-3 p-2 rounded-full' onChange={(e) => setInputValue(e.target.value)} />
             </div>
             <span className='text-klight'>Enter the N P K and Ph values of the location</span>
             <div className='flex flex-col max-w-[300px] gap-10'>
-              <input type="text" placeholder='Enter N value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
-              <input type="text" placeholder='Enter P value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
-              <input type="text" placeholder='Enter K value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
-              <input type="text" placeholder='Enter Ph value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={handleInputChange} />
+              <input type="text" placeholder='Enter N value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setNvalue(e.target.value) }/>
+              <input type="text" placeholder='Enter P value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setPvalue(e.target.value)} />
+              <input type="text" placeholder='Enter K value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setKvalue(e.target.value)} />
+              <input type="text" placeholder='Enter Ph value' className='bg-klight text-kdark mr-3 p-3 rounded-full' onChange={(e) => setPhvalue(e.target.value)} />
             </div>
 
             <button onClick={handleSubmit} className='bg-klight hover:text-[#0a210f] max-w-[400px] text-kdark font-bold py-2 px-4 rounded-lg ml-3'>Search</button>
@@ -66,16 +73,22 @@ const Crop = (props) => {
           
         </div>
 
-        <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col items-center">
+        <div className="right-side w-full lg:w-1/2 lg:h-full flex flex-col justify-center items-center">
           <div className="text-2xl font-bold text-left">Results</div>
-          <div> 
+          <div className='flex flex-col items-center mt-5'> 
             {
-              loading ? <SkeletonTheme baseColor="#0a210f" highlightColor="#e1e28945">
-                <p>
-                  <Skeleton className='md:max-w-[900px] h-[300px] mt-10' />
-                </p>
-                <Skeleton className=' max-w-[900px] h-3 mt-10' />
-              </SkeletonTheme> : null
+              loading ? 
+              <div>
+                <SkeletonTheme baseColor="#0a210f" highlightColor="#e1e28945">
+                  <Skeleton width={900} height={300}/>
+                </SkeletonTheme>
+              </div> 
+              : 
+              started
+              ?
+                <img className=' rounded-lg' src={`../crop_pics/${predictedOutput}.jpeg`} />
+              :
+                null
             }
             {
               loading
