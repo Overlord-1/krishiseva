@@ -17,8 +17,6 @@ const QAComp = ({ text, rank, disease, loading }) => {
     return (
 
         <div className="mt-4 lg:w-[1000px] border-2 border-klight rounded-lg p-4 text-klight  max-w-[90%]">
-
-
             {loading
                 ?
                 <SkeletonTheme baseColor="#0a210f" highlightColor="#e1e28945">
@@ -31,14 +29,8 @@ const QAComp = ({ text, rank, disease, loading }) => {
                 <div>
                     <div className="font-bold text-2xl mb-2">{list[rank]}</div>
                     <ReactTyped strings={[result]} typeSpeed={10} />
-
                 </div>
-
-
-
             }
-
-
         </div>
     )
 }
