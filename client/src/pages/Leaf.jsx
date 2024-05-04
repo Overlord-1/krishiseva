@@ -66,7 +66,7 @@ const Leaf = () => {
   return (
     <div className="bg-[#0a210f] min-h-screen">
       <Navbar text={"Leaf Disease Detector"} />
-      <div className="main-content w-full lg:overflow-hidden flex flex-col md:flex-row">
+      <div className="main-content w-full min-h-screen lg:overflow-hidden flex flex-col md:flex-row">
         <div className="leftside w-full lg:max-h-screen lg:w-1/2 relative flex flex-col items-center">
           <div className="text-2xl font-bold text-center">Upload Image</div>
           <div className=" border-klight border-2 rounded-lg  imageupload ml-5 bg-transparent w-full md:w-[500px] h-[300px] mt-10 flex items-center justify-center">
