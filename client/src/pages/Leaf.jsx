@@ -99,7 +99,7 @@ const Leaf = () => {
           }
 
           {success && <div className="mt-10 text-kdark font-bold">
-            <ReactTyped className="bg-klight p-5 mt-10 rounded-full" strings={[results.isHealthy ? `Congratulations your ${results?.crop} crop is very healthy ` : "Oops your crop has some disease check out the results."]} typeSpeed={10} />
+            <ReactTyped className="bg-klight p-5 mt-10 rounded-full" strings={[results.isHealthy ? `Congratulations your ${results?.crop} crop is very healthy ` : `Oops your crop has some disease check out the results.`]} typeSpeed={10} />
             {/* {results?.crop} */}
           </div>}
         </div>
